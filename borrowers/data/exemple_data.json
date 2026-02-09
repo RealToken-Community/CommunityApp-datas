@@ -1,15 +1,15 @@
 {
   "realt_borrowers_gnosis": {
     "2023": {
-      "0x1234567890123456789012345678901234567890": { "average_borrowed": 1, "rank": 1 },
-      "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd": { "average_borrowed": 0.42, "rank": 2 }
+      "0x1234567890123456789012345678901234567890": { "interest": 1, "interest_prorata": 0.7, "rank": 1 },
+      "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd": { "interest": 0.42, "interest_prorata": 0.3, "rank": 2 }
     },
     "2024": {
-      "0x1234567890123456789012345678901234567890": { "average_borrowed": 0.67, "rank": 1 },
-      "0x9999999999999999999999999999999999999999": { "average_borrowed": 0.25, "rank": 2 }
+      "0x1234567890123456789012345678901234567890": { "interest": 0.67, "interest_prorata": 0.73, "rank": 1 },
+      "0x9999999999999999999999999999999999999999": { "interest": 0.25, "interest_prorata": 0.27, "rank": 2 }
     },
     "2025": {
-      "0x5678567856785678567856785678567856785678": { "average_borrowed": 1.25, "rank": 1 }
+      "0x5678567856785678567856785678567856785678": { "interest": 1.25, "interest_prorata": 1, "rank": 1 }
     }
   }
 }

@@ -22,38 +22,31 @@ Result in CommunityApp-datas/borrowers/data/realt_borrowers_gnosis.json
 
 Optional environment variables:
 
-GNOSIS_RPC: Gnosis RPC URL (default: https://gnosis.publicnode.com). For full history or fewer limits, use a dedicated RPC.
-
-YEARS: Limit to desired years (e.g., YEARS=2025,2026) for faster testing.
+- **GNOSIS_RPC**: Gnosis RPC URL (default: https://gnosis.publicnode.com). For full history or fewer limits, use a dedicated RPC.
+- **YEARS**: Limit to desired years (e.g., `YEARS=2025,2026`) for faster testing.
 
 ## Calculation
 
-**No quarterly sampling.** We compute **real interest** per user over the year:
+- **getReservesList** + **getReserveData** on the pool → list of variable debt token addresses per reserve.
+- **Mint** and **Burn** events on these tokens expose `balanceIncrease` (accrued interest). **Interest** = sum of `balanceIncrease` per user over the year (in base).
+- **interest_prorata** = user's share of total interest (0–1). **rank** = ranking by interest (1 = top payer).
 
-- **2 snapshots**: debt at start of year and end of year (`getUserAccountData`).
-- **Events** Borrow and Repay over the year to get flows (borrows / repayments).
-- **Interest** = `debt_end - debt_start - (borrows - repayments)` (in base XDAI/USDC).
+If no variable debt tokens are found for a year (e.g. pool does not expose them), that year is skipped (no data). No fallback to snapshots or residual formula.
 
-Then:
-
-- **interest_prorata**: user's share of total interest (0 to 1).
-- **rank**: ranking by interest (1 = top payer).
-
-RMM V3: OK. RMM V2: TODO.
+RMM V3: OK. RMM V2: TODO?
 
 ## Format
 
 - **interest**: interest paid over the year (base XDAI/USDC).
 - **interest_prorata**: share of total interest (0–1).
 - **rank**: ranking by interest (1 = highest).
-- **average_borrowed**: average of debt at start of year and debt at end of year, i.e. `(debt_start + debt_end) / 2` in base XDAI/USDC (exposure over the year, for reference only).
 
 ```json
 {
   "realt_borrowers_gnosis": {
     "2025": {
-      "0x...": { "average_borrowed": 1000, "interest": 45.2, "interest_prorata": 0.15, "rank": 1 },
-      "0x...": { "average_borrowed": 500, "interest": 12.1, "interest_prorata": 0.04, "rank": 2 }
+      "0x...": { "interest": 45.2, "interest_prorata": 0.15, "rank": 1 },
+      "0x...": { "interest": 12.1, "interest_prorata": 0.04, "rank": 2 }
     }
   }
 }

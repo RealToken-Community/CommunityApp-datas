@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * RMM borrowers on Gnosis: for each user and each year we compute real interest over the year
- * using 2 snapshots (start + end of year) and Borrow/Repay events:
- *   interest = debt_end - debt_start - (sum borrows - sum repays)
- * Then: prorata of total interest and rank by interest.
- * No quarterly sampling. Output: ../data/realt_borrowers_gnosis.json
+ * RMM borrowers on Gnosis: per user per year we output interest, interest_prorata, and rank only.
+ *
+ * We only use variable debt tokens (mint/burn + index and balance): getReservesList + getReserveData,
+ * then Mint/Burn events on the debt tokens; interest = sum of balanceIncrease per user.
+ * No pool snapshots (getUserAccountData) and no residual formula.
+ *
+ * If no debt tokens are found for a year, that year is skipped (no data).
+ * Output: ../data/realt_borrowers_gnosis.json
  */
 
 import { createPublicClient, http, parseAbiItem, parseAbi } from "viem";
 import { gnosis } from "viem/chains";
-import { writeFileSync, mkdirSync } from "fs";
+import { writeFileSync, mkdirSync, readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import {
@@ -27,9 +30,17 @@ const DATA_DIR = join(__dirname, "..", "data");
 const OUTPUT_FILE = join(DATA_DIR, "realt_borrowers_gnosis.json");
 const BASE_DECIMALS = DEBT_BASE_DECIMALS;
 
-const poolAbi = parseAbi([
-  "function getUserAccountData(address user) view returns (uint256 totalCollateralBase, uint256 totalDebtBase, uint256 availableBorrowsBase, uint256 currentLiquidationThreshold, uint256 ltv, uint256 healthFactor)",
-]);
+const poolReserveAbi = JSON.parse(
+  readFileSync(join(__dirname, "pool-reserve-abi.json"), "utf8")
+);
+
+// Mint/Burn on variable debt tokens expose balanceIncrease (accrued interest)
+const debtTokenMintEvent = parseAbiItem(
+  "event Mint(address indexed caller, address indexed onBehalfOf, uint256 amountToMint, uint256 balanceIncrease, uint256 index)"
+);
+const debtTokenBurnEvent = parseAbiItem(
+  "event Burn(address indexed from, address indexed target, uint256 amountToBurn, uint256 balanceIncrease, uint256 index)"
+);
 
 const client = createPublicClient({
   chain: gnosis,
@@ -51,14 +62,15 @@ function reserveAmountToBase(amountWei, reserveAddress) {
   return Number(amountWei) * 10 ** (BASE_DECIMALS - dec);
 }
 
-async function getLogs(poolAddress, event, fromBlock, toBlock) {
+async function getLogs(addressOrAddresses, event, fromBlock, toBlock) {
   const logs = [];
   const chunk = 10_000;
   let from = fromBlock;
+  const addresses = Array.isArray(addressOrAddresses) ? addressOrAddresses : [addressOrAddresses];
   while (from <= toBlock) {
     const to = Math.min(from + chunk - 1, toBlock);
     const batch = await client.getLogs({
-      address: poolAddress,
+      address: addresses.length === 1 ? addresses[0] : addresses,
       event,
       fromBlock: BigInt(from),
       toBlock: BigInt(to),
@@ -70,25 +82,45 @@ async function getLogs(poolAddress, event, fromBlock, toBlock) {
   return logs;
 }
 
-async function getDebtsAtBlock(calls, blockNumber) {
-  if (calls.length === 0) return [];
-  const results = await client.multicall({
-    contracts: calls.map(({ pool, user }) => ({
-      address: pool,
-      abi: poolAbi,
-      functionName: "getUserAccountData",
-      args: [user],
-    })),
-    blockNumber: BigInt(blockNumber),
-    allowFailure: true,
-  });
-  return results.map((r) =>
-    r.status === "success" && r.result ? Number(r.result[1] ?? 0n) : 0
-  );
+/** Returns for each pool: list of { reserve, variableDebtTokenAddress } (debt token can be zero if not set). */
+async function getReservesAndDebtTokens(blockNumber) {
+  const out = [];
+  for (const pool of RMM_POOL_ADDRESSES) {
+    let reservesList = [];
+    try {
+      reservesList = await client.readContract({
+        address: pool,
+        abi: poolReserveAbi,
+        functionName: "getReservesList",
+        blockNumber: BigInt(blockNumber),
+      });
+    } catch (e) {
+      console.warn(`getReservesList failed for pool ${pool.slice(0, 10)}…:`, e?.message || e);
+      continue;
+    }
+    for (const reserve of reservesList || []) {
+      try {
+        const data = await client.readContract({
+          address: pool,
+          abi: poolReserveAbi,
+          functionName: "getReserveData",
+          args: [reserve],
+          blockNumber: BigInt(blockNumber),
+        });
+        const variableDebtTokenAddress = data?.variableDebtTokenAddress ?? data?.[10];
+        if (variableDebtTokenAddress && variableDebtTokenAddress !== "0x0000000000000000000000000000000000000000") {
+          out.push({ pool, reserve, variableDebtTokenAddress });
+        }
+      } catch (e) {
+        // skip this reserve
+      }
+    }
+  }
+  return out;
 }
 
 async function main() {
-  console.log("RMM Borrowers – interest per user per year (2 snapshots + Borrow/Repay), prorata + rank…\n");
+  console.log("RMM Borrowers – interest per user per year (debt token Mint/Burn only), prorata + rank…\n");
 
   const latestBlock = await client.getBlock();
   const latestBlockNumber = Number(latestBlock.number);
@@ -118,73 +150,63 @@ async function main() {
     yearRanges.push({ year, fromBlock: Math.max(0, fromBlock), toBlock });
   }
 
-  const borrowEvent = parseAbiItem(
-    "event Borrow(address indexed reserve, address user, address indexed onBehalfOf, uint256 amount, uint8 interestRateMode, uint256 borrowRate, uint16 indexed referralCode)"
-  );
-  const repayEvent = parseAbiItem(
-    "event Repay(address indexed reserve, address indexed user, address indexed repayer, uint256 amount, bool useATokens)"
-  );
-
   const divisor = 10 ** BASE_DECIMALS;
   const byYearUser = {};
   for (const { year } of yearRanges) byYearUser[String(year)] = {};
 
   for (const { year, fromBlock, toBlock } of yearRanges) {
-    const users = new Set();
-    const netBorrowBaseByUser = {};
-
-    for (const pool of RMM_POOL_ADDRESSES) {
-      const [borrows, repays] = await Promise.all([
-        getLogs(pool, borrowEvent, fromBlock, toBlock),
-        getLogs(pool, repayEvent, fromBlock, toBlock),
-      ]);
-      for (const log of borrows) {
-        const user = log.args?.onBehalfOf ?? log.args?.user;
-        if (!user) continue;
-        users.add(user);
-        if (!netBorrowBaseByUser[user]) netBorrowBaseByUser[user] = 0;
-        netBorrowBaseByUser[user] += reserveAmountToBase(log.args.amount, log.args.reserve);
-      }
-      for (const log of repays) {
-        const user = log.args?.user;
-        if (!user) continue;
-        users.add(user);
-        if (!netBorrowBaseByUser[user]) netBorrowBaseByUser[user] = 0;
-        netBorrowBaseByUser[user] -= reserveAmountToBase(log.args.amount, log.args.reserve);
-      }
-      console.log(`Year ${year}, pool ${pool.slice(0, 10)}… : ${borrows.length} Borrow, ${repays.length} Repay`);
+    const reserveDebtTokens = await getReservesAndDebtTokens(toBlock);
+    if (reserveDebtTokens.length === 0) {
+      console.log(`Year ${year}: no variable debt tokens found (getReservesList/getReserveData); skipping (no snapshots).`);
+      continue;
     }
+
+    const debtTokenToReserve = {};
+    for (const { reserve, variableDebtTokenAddress } of reserveDebtTokens) {
+      debtTokenToReserve[variableDebtTokenAddress.toLowerCase()] = reserve;
+    }
+    const debtTokenAddresses = reserveDebtTokens.map((r) => r.variableDebtTokenAddress);
+    const [mintLogs, burnLogs] = await Promise.all([
+      getLogs(debtTokenAddresses, debtTokenMintEvent, fromBlock, toBlock),
+      getLogs(debtTokenAddresses, debtTokenBurnEvent, fromBlock, toBlock),
+    ]);
+
+    const users = new Set();
+    const interestFromDebtTokenByUser = {};
+    for (const log of mintLogs) {
+      const user = log.args?.onBehalfOf;
+      if (!user) continue;
+      const reserve = debtTokenToReserve[log.address?.toLowerCase()];
+      if (reserve == null) continue;
+      const balanceIncrease = log.args?.balanceIncrease ?? log.args?.[3];
+      if (balanceIncrease != null && balanceIncrease > 0n) {
+        users.add(user);
+        if (!interestFromDebtTokenByUser[user]) interestFromDebtTokenByUser[user] = 0;
+        interestFromDebtTokenByUser[user] += reserveAmountToBase(balanceIncrease, reserve);
+      }
+    }
+    for (const log of burnLogs) {
+      const user = log.args?.from;
+      if (!user) continue;
+      const reserve = debtTokenToReserve[log.address?.toLowerCase()];
+      if (reserve == null) continue;
+      const balanceIncrease = log.args?.balanceIncrease ?? log.args?.[3];
+      if (balanceIncrease != null && balanceIncrease > 0n) {
+        users.add(user);
+        if (!interestFromDebtTokenByUser[user]) interestFromDebtTokenByUser[user] = 0;
+        interestFromDebtTokenByUser[user] += reserveAmountToBase(balanceIncrease, reserve);
+      }
+    }
+
+    console.log(`Year ${year}, debt tokens: ${debtTokenAddresses.length}, Mint ${mintLogs.length}, Burn ${burnLogs.length}`);
 
     const userList = [...users];
     if (userList.length === 0) continue;
 
-    const debtStartCalls = [];
-    const debtEndCalls = [];
     for (const user of userList) {
-      for (const pool of RMM_POOL_ADDRESSES) {
-        debtStartCalls.push({ pool, user });
-        debtEndCalls.push({ pool, user });
-      }
-    }
-    const debtsStart = await getDebtsAtBlock(debtStartCalls, fromBlock);
-    await sleep(300);
-    const debtsEnd = await getDebtsAtBlock(debtEndCalls, toBlock);
-
-    const poolsCount = RMM_POOL_ADDRESSES.length;
-    let i = 0;
-    for (const user of userList) {
-      let debtStart = 0, debtEnd = 0;
-      for (let p = 0; p < poolsCount; p++) {
-        debtStart += debtsStart[i] ?? 0;
-        debtEnd += debtsEnd[i] ?? 0;
-        i++;
-      }
-      const netBorrow = netBorrowBaseByUser[user] ?? 0;
-      let interestBase = debtEnd - debtStart - netBorrow;
-      if (interestBase < 0) interestBase = 0;
+      const interestBase = Math.round(interestFromDebtTokenByUser[user] ?? 0);
       const interestHuman = Math.round((interestBase / divisor) * 100) / 100;
-      const avgDebtHuman = Math.round(((debtStart + debtEnd) / 2 / divisor) * 100) / 100;
-      byYearUser[String(year)][user] = { interest: interestHuman, average_borrowed: avgDebtHuman };
+      byYearUser[String(year)][user] = { interest: interestHuman };
     }
   }
 
@@ -199,8 +221,8 @@ async function main() {
     withProrata.sort((a, b) => (b.interest ?? 0) - (a.interest ?? 0));
 
     const ranked = {};
-    withProrata.forEach(({ addr, average_borrowed, interest, interest_prorata }, index) => {
-      ranked[addr] = { average_borrowed, interest, interest_prorata, rank: index + 1 };
+    withProrata.forEach(({ addr, interest, interest_prorata }, index) => {
+      ranked[addr] = { interest, interest_prorata, rank: index + 1 };
     });
     byYearUser[year] = ranked;
   }
