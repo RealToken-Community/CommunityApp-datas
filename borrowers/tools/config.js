@@ -42,3 +42,9 @@ export function getSnapshotTimestampsForYear(year) {
 
 /** Decimal of the base currency (Aave: 8). */
 export const DEBT_BASE_DECIMALS = 8;
+
+/** Reserve decimals on Gnosis (to convert event amounts to base). */
+export const RESERVE_DECIMALS = {
+  "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83": 6,   // USDC
+  "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d": 18,  // WXDAI
+};

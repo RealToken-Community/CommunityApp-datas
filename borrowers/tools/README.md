@@ -4,7 +4,7 @@ Tool to generate the final data file for RMM (RealToken Money Market) borrowers 
 
 ## Run this tool
 
-From `borrowers` :
+From `borrowers`:
 
 ```bash
 npm install
@@ -22,36 +22,38 @@ Result in CommunityApp-datas/borrowers/data/realt_borrowers_gnosis.json
 
 Optional environment variables:
 
-GNOSIS_RPC: Gnosis RPC URL (default: https://gnosis.publicnode.com). F
-or full history or fewer limits, use a dedicated RPC.
+GNOSIS_RPC: Gnosis RPC URL (default: https://gnosis.publicnode.com). For full history or fewer limits, use a dedicated RPC.
 
 YEARS: Limit to desired years (e.g., YEARS=2025,2026) for faster testing.
 
-## Calcul: 
+## Calculation
 
-4 snapshots per year per user (end of each quarter), value in XDAI/USDC, then average of these 4 values
+**No quarterly sampling.** We compute **real interest** per user over the year:
 
-RMM V3: OK
-RMM V2: TODO
+- **2 snapshots**: debt at start of year and end of year (`getUserAccountData`).
+- **Events** Borrow and Repay over the year to get flows (borrows / repayments).
+- **Interest** = `debt_end - debt_start - (borrows - repayments)` (in base XDAI/USDC).
 
-## Format 
+Then:
 
-- **average_borrowed**: average debt (XDAI/USDC) over 4 snapshots per user per year.
-- **rank**: ranking by borrowed amount (1 = highest).
+- **interest_prorata**: user's share of total interest (0 to 1).
+- **rank**: ranking by interest (1 = top payer).
 
-```
+RMM V3: OK. RMM V2: TODO.
+
+## Format
+
+- **interest**: interest paid over the year (base XDAI/USDC).
+- **interest_prorata**: share of total interest (0–1).
+- **rank**: ranking by interest (1 = highest).
+- **average_borrowed**: average of debt at start of year and debt at end of year, i.e. `(debt_start + debt_end) / 2` in base XDAI/USDC (exposure over the year, for reference only).
+
+```json
 {
   "realt_borrowers_gnosis": {
-    "2023": {
-      "0x1234567890123456789012345678901234567890": { "average_borrowed": 1, "rank": 1 },
-      "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd": { "average_borrowed": 0.42, "rank": 2 }
-    },
-    "2024": {
-      "0x1234567890123456789012345678901234567890": { "average_borrowed": 0.67, "rank": 1 },
-      "0x9999999999999999999999999999999999999999": { "average_borrowed": 0.25, "rank": 2 }
-    },
     "2025": {
-      "0x5678567856785678567856785678567856785678": { "average_borrowed": 1.25, "rank": 1 }
+      "0x...": { "average_borrowed": 1000, "interest": 45.2, "interest_prorata": 0.15, "rank": 1 },
+      "0x...": { "average_borrowed": 500, "interest": 12.1, "interest_prorata": 0.04, "rank": 2 }
     }
   }
 }
@@ -60,4 +62,3 @@ RMM V2: TODO
 ## Questions
 
 - Should we plan for blacklists here too? (Blacklists are managed in the community budget distribution tool)
-
