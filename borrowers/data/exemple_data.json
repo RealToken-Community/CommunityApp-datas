@@ -1,0 +1,31 @@
+{
+    "realt_borrowers_gnosis": {
+      "2023": {
+        "0x1234...abcd": {
+          "total_emprunts": 5,
+          "moyenne_emprunts": 0.42
+        },
+        "0x5678...efgh": {
+          "total_emprunts": 12,
+          "moyenne_emprunts": 1.0
+        }
+      },
+      "2024": {
+        "0x1234...abcd": {
+          "total_emprunts": 8,
+          "moyenne_emprunts": 0.67
+        },
+        "0x9999...ijkl": {
+          "total_emprunts": 3,
+          "moyenne_emprunts": 0.25
+        }
+      },
+      "2025": {
+        "0x5678...efgh": {
+          "total_emprunts": 15,
+          "moyenne_emprunts": 1.25
+        }
+      }
+    }
+  }
+  
