@@ -6,11 +6,11 @@ example:
 
 # List of categories:
 
-- Borrowers (should we plan for blacklists here too?)
-- Collectors
+- Borrowers (Tools in borrowers/tools)
+- Developers (Tools in developper/tools)
+- Collectors (??)
 - Community managers (what to do for those who left the ecosystem?)
 - Community participants
-- Developers
 - Documenters
 - Liquidators
 - Liquidity providers
