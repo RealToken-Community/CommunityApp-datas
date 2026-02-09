@@ -45,3 +45,5 @@ Example:
 ```
 
 Repositories included are those returned by the API `GET /orgs/RealToken-Community/repos` (type `all`).
+
+To retrieve all repositories (public and private), the GitHub token must have access to the private repository. If the token doesn't have access to the private repo, only public repositories will be counted.
