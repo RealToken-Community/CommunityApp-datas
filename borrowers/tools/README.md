@@ -2,7 +2,7 @@
 
 Tool to generate the final data file for RMM (RealToken Money Market) borrowers on Gnosis, by user and by year (versions 2 and 3).
 
-## Une seule commande
+## Run this tool
 
 From `borrowers` :
 
