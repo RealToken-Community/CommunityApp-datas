@@ -1,0 +1,10 @@
+{
+  "name": "developers-github-commits",
+  "version": "1.0.0",
+  "description": "Count commits per year per member across RealToken-Community GitHub org",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-github-commits.js",
+    "data": "node fetch-github-commits.js"
+  }
+}
