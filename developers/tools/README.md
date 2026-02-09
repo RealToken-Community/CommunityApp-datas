@@ -47,3 +47,9 @@ Example:
 Repositories included are those returned by the API `GET /orgs/RealToken-Community/repos` (type `all`).
 
 To retrieve all repositories (public and private), the GitHub token must have access to the private repository. If the token doesn't have access to the private repo, only public repositories will be counted.
+
+## Forks and pre-community history
+
+Repos that are **forks** (e.g. levinswap-interface, levinswap-farm, levinswap-info, from Uniswap) keep the full git history of the upstream project. Without filtering, 2019/2020 would show many upstream contributors (Uniswap, etc.) who never contributed under RealToken-Community.
+
+The script therefore **only counts commits from the year the repo was created in the org** (`created_at` from the API). For a repo created in 2022, commits from 2019–2021 are ignored. This keeps the leaderboard focused on community contributions.

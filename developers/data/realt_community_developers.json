@@ -1,287 +1,10 @@
 {
   "RealToken-Community": {
-    "2019": {
-      "mirshko": {
-        "commits": 105,
-        "rank": 1
-      },
-      "NoahZinsmeister": {
-        "commits": 97,
-        "rank": 2
-      },
-      "ianlapham": {
-        "commits": 95,
-        "rank": 3
-      },
-      "haydenadams": {
-        "commits": 39,
-        "rank": 4
-      },
-      "conlan": {
-        "commits": 28,
-        "rank": 5
-      },
-      "davekay100": {
-        "commits": 24,
-        "rank": 6
-      },
-      "ross@jkrbinvestments.com": {
-        "commits": 10,
-        "rank": 7
-      },
-      "git.localhost@vanhecke.info": {
-        "commits": 6,
-        "rank": 8
-      },
-      "PaulRBerg": {
-        "commits": 5,
-        "rank": 9
-      },
-      "callil": {
-        "commits": 5,
-        "rank": 10
-      },
-      "hav-noms": {
-        "commits": 4,
-        "rank": 11
-      },
-      "dy": {
-        "commits": 4,
-        "rank": 12
-      },
-      "maggie@wespoke.com": {
-        "commits": 4,
-        "rank": 13
-      },
-      "Agusx1211": {
-        "commits": 3,
-        "rank": 14
-      },
-      "clinton@synthetix.io": {
-        "commits": 3,
-        "rank": 15
-      },
-      "ChristophSiegenthaler": {
-        "commits": 2,
-        "rank": 16
-      },
-      "wjmelements": {
-        "commits": 2,
-        "rank": 17
-      },
-      "c@martinkrung.org": {
-        "commits": 2,
-        "rank": 18
-      },
-      "brianmcmichael": {
-        "commits": 2,
-        "rank": 19
-      },
-      "artistic709": {
-        "commits": 2,
-        "rank": 20
-      },
-      "tpmccallum": {
-        "commits": 2,
-        "rank": 21
-      },
-      "mikedemarais": {
-        "commits": 2,
-        "rank": 22
-      },
-      "TomAFrench": {
-        "commits": 1,
-        "rank": 23
-      },
-      "nate.gentile@whiteblock.io": {
-        "commits": 1,
-        "rank": 24
-      },
-      "xuhcc": {
-        "commits": 1,
-        "rank": 25
-      },
-      "micah@zoltu.net": {
-        "commits": 1,
-        "rank": 26
-      },
-      "pcowgill": {
-        "commits": 1,
-        "rank": 27
-      },
-      "hacktar": {
-        "commits": 1,
-        "rank": 28
-      },
-      "jacko125": {
-        "commits": 1,
-        "rank": 29
-      },
-      "mounibec": {
-        "commits": 1,
-        "rank": 30
-      },
-      "pascalvanhecke": {
-        "commits": 1,
-        "rank": 31
-      },
-      "eccentricexit": {
-        "commits": 1,
-        "rank": 32
-      },
-      "hwwhww": {
-        "commits": 1,
-        "rank": 33
-      },
-      "zhous": {
-        "commits": 1,
-        "rank": 34
-      },
-      "OliverNChalk": {
-        "commits": 1,
-        "rank": 35
-      },
-      "poznyakbogdan": {
-        "commits": 1,
-        "rank": 36
-      }
-    },
+    "2019": {},
     "2020": {
-      "moodysalem": {
-        "commits": 304,
-        "rank": 1
-      },
-      "ianlapham": {
-        "commits": 210,
-        "rank": 2
-      },
       "Sigri44": {
         "commits": 134,
-        "rank": 3
-      },
-      "NoahZinsmeister": {
-        "commits": 44,
-        "rank": 4
-      },
-      "chefnomi": {
-        "commits": 11,
-        "rank": 5
-      },
-      "callil": {
-        "commits": 9,
-        "rank": 6
-      },
-      "lint-action": {
-        "commits": 5,
-        "rank": 7
-      },
-      "JFrankfurt": {
-        "commits": 3,
-        "rank": 8
-      },
-      "dependabot[bot]": {
-        "commits": 3,
-        "rank": 9
-      },
-      "jonathandiep": {
-        "commits": 2,
-        "rank": 10
-      },
-      "CryptoCatVC": {
-        "commits": 2,
-        "rank": 11
-      },
-      "gakonst": {
-        "commits": 1,
-        "rank": 12
-      },
-      "developer.clear@gmail.com": {
-        "commits": 1,
-        "rank": 13
-      },
-      "ncitron": {
-        "commits": 1,
-        "rank": 14
-      },
-      "eccentricexit": {
-        "commits": 1,
-        "rank": 15
-      },
-      "gkucmierz": {
-        "commits": 1,
-        "rank": 16
-      },
-      "anxolin": {
-        "commits": 1,
-        "rank": 17
-      },
-      "nadavhollander": {
-        "commits": 1,
-        "rank": 18
-      },
-      "shanefontaine": {
-        "commits": 1,
-        "rank": 19
-      },
-      "xiaotiandada": {
-        "commits": 1,
-        "rank": 20
-      },
-      "palevoo": {
-        "commits": 1,
-        "rank": 21
-      },
-      "JayWelsh": {
-        "commits": 1,
-        "rank": 22
-      },
-      "tmlee": {
-        "commits": 1,
-        "rank": 23
-      },
-      "PaulRBerg": {
-        "commits": 1,
-        "rank": 24
-      },
-      "tranquang9a1": {
-        "commits": 1,
-        "rank": 25
-      },
-      "afmsavage": {
-        "commits": 1,
-        "rank": 26
-      },
-      "micah@zoltu.net": {
-        "commits": 1,
-        "rank": 27
-      },
-      "ChristophSiegenthaler": {
-        "commits": 1,
-        "rank": 28
-      },
-      "mirshko": {
-        "commits": 1,
-        "rank": 29
-      },
-      "slafebre": {
-        "commits": 1,
-        "rank": 30
-      },
-      "dispix": {
-        "commits": 1,
-        "rank": 31
-      },
-      "way2rach": {
-        "commits": 1,
-        "rank": 32
-      },
-      "danrobinson": {
-        "commits": 1,
-        "rank": 33
-      },
-      "moshemalawach": {
-        "commits": 1,
-        "rank": 34
+        "rank": 1
       }
     },
     "2021": {
@@ -289,37 +12,9 @@
         "commits": 234,
         "rank": 1
       },
-      "LucaSilverhand": {
-        "commits": 85,
-        "rank": 2
-      },
-      "dev@raidguild.org": {
-        "commits": 31,
-        "rank": 3
-      },
-      "lint-action": {
-        "commits": 9,
-        "rank": 4
-      },
       "wysow": {
         "commits": 6,
-        "rank": 5
-      },
-      "tkernell": {
-        "commits": 5,
-        "rank": 6
-      },
-      "torkinos": {
-        "commits": 3,
-        "rank": 7
-      },
-      "gik021": {
-        "commits": 3,
-        "rank": 8
-      },
-      "sunguru98": {
-        "commits": 2,
-        "rank": 9
+        "rank": 2
       }
     },
     "2022": {
@@ -395,12 +90,12 @@
         "commits": 123,
         "rank": 3
       },
-      "Michael-RealT": {
-        "commits": 122,
-        "rank": 4
-      },
       "jycssu-com": {
         "commits": 117,
+        "rank": 4
+      },
+      "Michael-RealT": {
+        "commits": 116,
         "rank": 5
       },
       "AlexRLT": {
@@ -473,12 +168,12 @@
       }
     },
     "2025": {
-      "baptiste@mac.home": {
-        "commits": 206,
-        "rank": 1
-      },
       "WikiRealTProd": {
         "commits": 103,
+        "rank": 1
+      },
+      "baptiste@mac.home": {
+        "commits": 102,
         "rank": 2
       },
       "byackee": {
@@ -497,16 +192,16 @@
         "commits": 40,
         "rank": 6
       },
-      "baptiste@MacBook-Air-de-Baptiste.local": {
-        "commits": 29,
-        "rank": 7
-      },
       "Michael-RealT": {
         "commits": 24,
-        "rank": 8
+        "rank": 7
       },
       "santarellib@gmail.com": {
-        "commits": 12,
+        "commits": 11,
+        "rank": 8
+      },
+      "baptiste@MacBook-Air-de-Baptiste.local": {
+        "commits": 6,
         "rank": 9
       },
       "Darkildo": {
@@ -517,25 +212,21 @@
         "commits": 2,
         "rank": 11
       },
-      "baptiste@Mac.fritz.box": {
-        "commits": 2,
-        "rank": 12
-      },
       "NandyBa": {
         "commits": 1,
-        "rank": 13
+        "rank": 12
       },
       "rpc3000": {
         "commits": 1,
-        "rank": 14
+        "rank": 13
       },
       "baptistr": {
         "commits": 1,
-        "rank": 15
+        "rank": 14
       },
       "cloudflare[bot]": {
         "commits": 1,
-        "rank": 16
+        "rank": 15
       }
     },
     "2026": {

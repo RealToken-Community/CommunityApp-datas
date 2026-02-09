@@ -53,11 +53,14 @@ async function fetchPaginated(urlTemplate, perPage = 100) {
   return out;
 }
 
-/** List all repositories of the org (only name). */
+/** List all repositories of the org with name and created_at (to exclude pre-community history on forks). */
 async function listOrgRepos() {
   const url = `${GITHUB_API_BASE}/orgs/${GITHUB_ORG}/repos?type=all`;
   const repos = await fetchPaginated(url);
-  return repos.map((r) => r.name);
+  return repos.map((r) => ({
+    name: r.name,
+    firstYear: new Date(r.created_at).getFullYear(),
+  }));
 }
 
 /** Retrieve all commits of a repo for a year (by pagination). */
@@ -94,16 +97,18 @@ async function main() {
   for (const year of years) {
     console.log(`\nYear ${year}…`);
     for (const repo of repos) {
+      // Only count commits from the year the repo existed in the org (excludes fork history, e.g. Uniswap/Levinswap pre-community)
+      if (year < repo.firstYear) continue;
       try {
-        const commits = await listCommitsForYear(repo, year);
+        const commits = await listCommitsForYear(repo.name, year);
         for (const c of commits) {
           const author = authorKey(c);
           if (!commitsByYear[String(year)][author]) commitsByYear[String(year)][author] = 0;
           commitsByYear[String(year)][author]++;
         }
-        if (commits.length > 0) console.log(`  ${repo}: ${commits.length} commits`);
+        if (commits.length > 0) console.log(`  ${repo.name}: ${commits.length} commits`);
       } catch (e) {
-        console.warn(`  ${repo}: ${e.message}`);
+        console.warn(`  ${repo.name}: ${e.message}`);
       }
     }
   }
