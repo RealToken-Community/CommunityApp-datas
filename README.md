@@ -6,12 +6,13 @@ example:
 
 # List of categories:
 
-- Borrowers (Tools in borrowers/tools)
-- Developers (Tools in developper/tools)
+- Borrowers (Tools in borrowers/tools)(TODO: add RMMV2, RMMV3 OK)
+- Developers (Tools in developper/tools for search all commit in community repository)
+
+- Community managers (what to do for those who left the ecosystem? How define this?))
+- Community participants (How define this? Need tool for discord, telegram ok)
+- Documenters (How define this?)
+- Liquidators (search liquidator in RMM - need tool)
+- Liquidity providers (search in levinswap?)
 - Collectors (??)
-- Community managers (what to do for those who left the ecosystem?)
-- Community participants
-- Documenters
-- Liquidators
-- Liquidity providers
 - Users (??)
