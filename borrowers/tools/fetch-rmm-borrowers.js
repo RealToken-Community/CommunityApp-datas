@@ -64,7 +64,7 @@ function reserveAmountToBase(amountWei, reserveAddress) {
 
 async function getLogs(addressOrAddresses, event, fromBlock, toBlock) {
   const logs = [];
-  const chunk = 10_000;
+  const chunk = 500_000;
   let from = fromBlock;
   const addresses = Array.isArray(addressOrAddresses) ? addressOrAddresses : [addressOrAddresses];
   while (from <= toBlock) {
