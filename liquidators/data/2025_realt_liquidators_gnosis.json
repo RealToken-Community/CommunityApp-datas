@@ -1,0 +1,86 @@
+{
+  "realt_liquidators_gnosis": {
+    "2026": {
+      "0x10497611Ee6524D75FC45E3739F472F83e282AD5": {
+        "amount": 75839.19,
+        "amount_prorata": 0.878,
+        "rank": 1
+      },
+      "0xFAc003734B5FC0a8f317cF0e7f861D05da8d79F1": {
+        "amount": 7565,
+        "amount_prorata": 0.0876,
+        "rank": 2
+      },
+      "0x9d3680e4d49D9d168D843faF9d20Ed270e1dA332": {
+        "amount": 2093.66,
+        "amount_prorata": 0.0242,
+        "rank": 3
+      },
+      "0x11D92A54c29F2699147193f9F6f04b8e2C5dFf35": {
+        "amount": 423.89,
+        "amount_prorata": 0.0049,
+        "rank": 4
+      },
+      "0x083CfA7FD187Be983ce5D519fE7ae78357779998": {
+        "amount": 195.65,
+        "amount_prorata": 0.0023,
+        "rank": 5
+      },
+      "0x7Ee567D2AC5dca4c422281Deb1e2334a805BA6C1": {
+        "amount": 154.73,
+        "amount_prorata": 0.0018,
+        "rank": 6
+      },
+      "0xDc0604B378adCa99a9e2096707aD4830673CE5B8": {
+        "amount": 41.32,
+        "amount_prorata": 0.0005,
+        "rank": 7
+      },
+      "0xDA31F8955F9583FE9286f92f7e0EA2aFF46E8d3F": {
+        "amount": 19.33,
+        "amount_prorata": 0.0002,
+        "rank": 8
+      },
+      "0xaad52333ee571A5c8a3ab4AA072c2EE0BA0302b6": {
+        "amount": 18.94,
+        "amount_prorata": 0.0002,
+        "rank": 9
+      },
+      "0x0953B680f76F85a25855364cBf6Ff05d4ab21e6e": {
+        "amount": 9.34,
+        "amount_prorata": 0.0001,
+        "rank": 10
+      },
+      "0xC839cBCB7BfF9c4E07E98f1c83467A67bDe56AE8": {
+        "amount": 8.27,
+        "amount_prorata": 0.0001,
+        "rank": 11
+      },
+      "0xDB69bEa5eA01990eB454c0e36EA744b993F427F1": {
+        "amount": 3.69,
+        "amount_prorata": 0,
+        "rank": 12
+      },
+      "0x032800d30D1c84c752a7B37193A375a2D9669A1A": {
+        "amount": 3.18,
+        "amount_prorata": 0,
+        "rank": 13
+      },
+      "0xc02BE9069082770d5b249f98b584D22a7599E8E0": {
+        "amount": 0.89,
+        "amount_prorata": 0,
+        "rank": 14
+      },
+      "0xb5F61aFC77e4d3A7c89788252e8d4e25Bdf0d38C": {
+        "amount": 0.65,
+        "amount_prorata": 0,
+        "rank": 15
+      },
+      "0x622344eeC92C3De736E19ffbbE6E9cc017b2C6fe": {
+        "amount": 0,
+        "amount_prorata": 0,
+        "rank": 16
+      }
+    }
+  }
+}

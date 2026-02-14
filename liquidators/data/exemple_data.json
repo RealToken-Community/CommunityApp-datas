@@ -1,0 +1,35 @@
+{
+  "realt_liquidators_gnosis": {
+    "2023": {
+      "0x1234567890123456789012345678901234567890": {
+        "amount": 12500.5,
+        "amount_prorata": 0.65,
+        "rank": 1
+      },
+      "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd": {
+        "amount": 4200.25,
+        "amount_prorata": 0.22,
+        "rank": 2
+      }
+    },
+    "2024": {
+      "0x1234567890123456789012345678901234567890": {
+        "amount": 18700.0,
+        "amount_prorata": 0.71,
+        "rank": 1
+      },
+      "0x9999999999999999999999999999999999999999": {
+        "amount": 5500.0,
+        "amount_prorata": 0.21,
+        "rank": 2
+      }
+    },
+    "2025": {
+      "0x5678567856785678567856785678567856785678": {
+        "amount": 3200.75,
+        "amount_prorata": 1.0,
+        "rank": 1
+      }
+    }
+  }
+}
