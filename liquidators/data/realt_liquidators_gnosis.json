@@ -1,5 +1,51 @@
 {
   "realt_liquidators_gnosis": {
+    "2022": {},
+    "2023": {},
+    "2024": {
+      "0x10497611Ee6524D75FC45E3739F472F83e282AD5": {
+        "amount": 2070.5,
+        "amount_prorata": 1,
+        "rank": 1
+      }
+    },
+    "2025": {
+      "0x10497611Ee6524D75FC45E3739F472F83e282AD5": {
+        "amount": 178993.23,
+        "amount_prorata": 0.9896,
+        "rank": 1
+      },
+      "0xE5451d121040E6176476077955EFc44EA5c01D48": {
+        "amount": 1841.23,
+        "amount_prorata": 0.0102,
+        "rank": 2
+      },
+      "0xB2CC0d719B71Fb91082e050967b644a5E55b33a0": {
+        "amount": 30.4,
+        "amount_prorata": 0.0002,
+        "rank": 3
+      },
+      "0xC839cBCB7BfF9c4E07E98f1c83467A67bDe56AE8": {
+        "amount": 12.04,
+        "amount_prorata": 0.0001,
+        "rank": 4
+      },
+      "0x0953B680f76F85a25855364cBf6Ff05d4ab21e6e": {
+        "amount": 2.8,
+        "amount_prorata": 0,
+        "rank": 5
+      },
+      "0xDc0604B378adCa99a9e2096707aD4830673CE5B8": {
+        "amount": 0.84,
+        "amount_prorata": 0,
+        "rank": 6
+      },
+      "0xC6a82e72156A11a2E1634633aF5E4517B451f0D9": {
+        "amount": 0.02,
+        "amount_prorata": 0,
+        "rank": 7
+      }
+    },
     "2026": {
       "0x10497611Ee6524D75FC45E3739F472F83e282AD5": {
         "amount": 75839.19,

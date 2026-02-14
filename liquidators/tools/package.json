@@ -8,6 +8,7 @@
     "data": "node fetch-rmm-liquidators.js"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "viem": "^2.21.0"
   }
 }

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import "dotenv/config";
+
 /**
  * RMM liquidators on Gnosis: per address per year we output amount, amount_prorata, rank.
  * Uses LiquidationCall events from Aave/RMM pools (v2 and v3).
@@ -98,7 +100,7 @@ async function fetchRangeWithRetry(addresses, event, fromBlock, toBlock, logLabe
 }
 
 async function getLogs(addresses, event, fromBlock, toBlock, logLabel = "") {
-  const chunk = 100_000;
+  const chunk = 500_000;
   const logs = [];
   let from = fromBlock;
   let chunkIndex = 0;

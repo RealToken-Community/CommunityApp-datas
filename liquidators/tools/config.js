@@ -4,9 +4,10 @@
  * - RMM v2: Add the pool address if available.
  */
 
+/** Gnosis RPC. Override with GNOSIS_RPC env var. Gateway.fm is faster for getLogs than publicnode. */
 export const GNOSIS_RPC =
   process.env.GNOSIS_RPC ||
-  "https://gnosis.publicnode.com";
+  "https://rpc.gnosis.gateway.fm";
 
 /** RMM pool addresses on Gnosis (v2 and v3). */
 export const RMM_POOL_ADDRESSES = [
