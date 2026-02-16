@@ -264,7 +264,7 @@ async function main() {
   const reserveDebtTokens = await getReservesAndDebtTokens(latestBlockNumber);
   if (reserveDebtTokens.length === 0) {
     console.log("No variable debt tokens found for any pool; nothing to fetch.");
-    const output = { realt_borrowers_gnosis: byYearUser };
+    const output = { execution_script: new Date().toISOString(), realt_borrowers_gnosis: byYearUser };
     mkdirSync(DATA_DIR, { recursive: true });
     writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
     console.log(`File written: ${OUTPUT_FILE}`);
@@ -389,7 +389,7 @@ async function main() {
     byYearUser[year] = ranked;
   }
 
-  const output = { realt_borrowers_gnosis: byYearUser };
+  const output = { execution_script: new Date().toISOString(), realt_borrowers_gnosis: byYearUser };
   mkdirSync(DATA_DIR, { recursive: true });
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
   console.log(`\nFile written: ${OUTPUT_FILE}`);

@@ -126,7 +126,7 @@ async function main() {
     outputByYear[year] = ranked;
   }
 
-  const output = { [GITHUB_ORG]: outputByYear };
+  const output = { execution_script: new Date().toISOString(), [GITHUB_ORG]: outputByYear };
   mkdirSync(DATA_DIR, { recursive: true });
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
   console.log(`\nFile written: ${OUTPUT_FILE}`);

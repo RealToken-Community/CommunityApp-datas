@@ -157,7 +157,7 @@ async function main() {
   if (pools.length === 0) {
     console.log("No RMM pool configured in config.js (RMM_POOL_ADDRESSES).");
     mkdirSync(DATA_DIR, { recursive: true });
-    writeFileSync(OUTPUT_FILE, JSON.stringify({ realt_liquidators_gnosis: byYearLiquidator }, null, 2), "utf8");
+    writeFileSync(OUTPUT_FILE, JSON.stringify({ execution_script: new Date().toISOString(), realt_liquidators_gnosis: byYearLiquidator }, null, 2), "utf8");
     console.log(`File written (empty): ${OUTPUT_FILE}`);
     return;
   }
@@ -195,7 +195,7 @@ async function main() {
     byYearLiquidator[String(year)] = ranked;
   }
 
-  const output = { realt_liquidators_gnosis: byYearLiquidator };
+  const output = { execution_script: new Date().toISOString(), realt_liquidators_gnosis: byYearLiquidator };
   mkdirSync(DATA_DIR, { recursive: true });
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
   console.log(`\nFile written: ${OUTPUT_FILE}`);
