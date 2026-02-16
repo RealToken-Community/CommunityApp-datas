@@ -11,7 +11,10 @@ npm install
 GNOSIS_RPC=https://rpc.gnosis.gateway.fm YEARS=2025 npm run fetch
 ```
 
-Execution time can be a bit long, proceed year by year...
+```bash
+npm run fetch
+```
+
 
 Result in CommunityApp-datas/borrowers/data/realt_borrowers_gnosis.json
 
