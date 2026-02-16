@@ -15,7 +15,7 @@
  * Output: ../data/realt_borrowers_gnosis.json
  */
 
-import { createPublicClient, http, parseAbiItem, parseAbi } from "viem";
+import { createPublicClient, http, parseAbiItem } from "viem";
 import { gnosis } from "viem/chains";
 import { writeFileSync, mkdirSync, readFileSync } from "fs";
 import { join, dirname } from "path";
@@ -98,12 +98,7 @@ async function getLogs(addressOrAddresses, event, fromBlock, toBlock) {
   return logs;
 }
 
-/**
- * Détecte l’interface d’un pool (v2 ou v3) en testant getReserveData sur la première réserve.
- * - v3 : struct avec configuration, variableBorrowIndex, variableDebtTokenAddress, etc.
- * - v2 : struct avec liquidityIndex, variableBorrowIndex, variableDebtTokenAddress (index 9).
- * Retourne { abi, variableDebtKey } où variableDebtKey est le chemin pour extraire l’adresse (v3: .variableDebtTokenAddress, v2: [9]).
- */
+/** Détecte l’interface d’un pool (v2 ou v3) via getReserveData sur la première réserve. Retourne { abi, version }. */
 async function detectPoolInterface(pool, reservesList, blockNumber) {
   if (!reservesList?.length) return null;
   const opts = { address: pool, args: [reservesList[0]] };
@@ -140,7 +135,7 @@ async function detectPoolInterface(pool, reservesList, blockNumber) {
 }
 
 /** Extrait variableDebtTokenAddress depuis la réponse getReserveData (v2 ou v3). */
-function getVariableDebtTokenAddress(data, version) {
+function getVariableDebtTokenAddress(data) {
   if (!data) return null;
   const addr = data.variableDebtTokenAddress ?? data[10] ?? data[9];
   if (!addr || addr === "0x0000000000000000000000000000000000000000") return null;
@@ -212,7 +207,7 @@ async function getReservesAndDebtTokens(blockNumber, options = {}) {
           data = null;
         }
       }
-      const variableDebtTokenAddress = getVariableDebtTokenAddress(data, iface.version);
+      const variableDebtTokenAddress = getVariableDebtTokenAddress(data);
       if (variableDebtTokenAddress) {
         out.push({ pool, reserve, variableDebtTokenAddress });
         count++;

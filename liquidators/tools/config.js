@@ -1,7 +1,5 @@
 /**
  * Configuration for fetching RMM (RealToken Money Market) liquidation data on Gnosis.
- * - RMM v3: Main pool (Aave-based).
- * - RMM v2: Add the pool address if available.
  */
 
 /** Gnosis RPC. Override with GNOSIS_RPC env var. Gateway.fm is faster for getLogs than publicnode. */

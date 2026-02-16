@@ -1,10 +1,6 @@
 /**
  * Configuration for fetching RMM (RealToken Money Market) data on Gnosis.
- * - RMM v3: Pool Aave v3 (getReserveData returns struct with variableDebtTokenAddress).
- * - RMM v2: LendingPool Aave v2 (getReserveData returns struct avec variableDebtTokenAddress à l’index 9).
- * Les deux exposent getReservesList() et getReserveData(asset); le script détecte l’interface par pool.
  */
-
 export const GNOSIS_RPC =
   process.env.GNOSIS_RPC ||
   "https://rpc.gnosis.gateway.fm";
@@ -42,19 +38,6 @@ export const YEAR_STARTS = {
 
 /** Average time between two blocks on Gnosis (~5 s). */
 export const GNOSIS_BLOCK_TIME = 5;
-
-/** Number of debt snapshots per year (end of each quarter). */
-export const SNAPSHOTS_PER_YEAR = 4;
-
-/** Quarter end timestamps (day at 12:00 UTC) : Mar 31, Jun 30, Sep 30, Dec 31. */
-export function getSnapshotTimestampsForYear(year) {
-  return [
-    Date.UTC(year, 2, 31, 12, 0, 0) / 1000,  // 31 March
-    Date.UTC(year, 5, 30, 12, 0, 0) / 1000,  // 30 June
-    Date.UTC(year, 8, 30, 12, 0, 0) / 1000, // 30 September
-    Date.UTC(year, 11, 31, 12, 0, 0) / 1000, // 31 December
-  ];
-}
 
 /** Decimal of the base currency (Aave: 8). */
 export const DEBT_BASE_DECIMALS = 8;

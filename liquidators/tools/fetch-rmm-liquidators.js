@@ -103,10 +103,8 @@ async function getLogs(addresses, event, fromBlock, toBlock, logLabel = "") {
   const chunk = 500_000;
   const logs = [];
   let from = fromBlock;
-  let chunkIndex = 0;
   while (from <= toBlock) {
     const to = Math.min(from + chunk - 1, toBlock);
-    chunkIndex++;
     const batch = await fetchRangeWithRetry(addresses, event, from, to, logLabel, 10_000);
     logs.push(...batch);
     from = to + 1;

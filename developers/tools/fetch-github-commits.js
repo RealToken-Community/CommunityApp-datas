@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Counts commits by year and member (GitHub author) on all repositories
- * of the RealToken-Community organization. Produces a JSON file in the format exemple_data.json.
- *
- * Output: ../data/realt_community_developers.json
- * Requires GITHUB_TOKEN (environment variable) for correct usage (rate limit).
+ * Commits par année et par auteur (org RealToken-Community). Output: ../data/realt_community_developers.json
+ * GITHUB_TOKEN recommandé (sans token : 60 req/h).
  */
 
 import { writeFileSync, mkdirSync } from "fs";
