@@ -9,12 +9,13 @@ export const GNOSIS_RPC =
   process.env.GNOSIS_RPC ||
   "https://rpc.gnosis.gateway.fm";
 
-/** RMM pool addresses on Gnosis (v2 and v3). */
+/**
+ * RMM pool addresses on Gnosis (v2 and v3).
+ * Équivalent du "Pool Proxy" par version ; LiquidationCall est émis par ces contrats (pas par le WETH Gateway 0x80Dc05…).
+ */
 export const RMM_POOL_ADDRESSES = [
-  // RMM v3 - Main pool (RealT RMM v3: Pool Proxy)
-  "0xFb9b496519fCa8473fba1af0850B6B8F476BFdB3",
-  // RMM v2
-  "0x80Dc050A8C923C0051D438026f1192d53033728c",
+  "0xFb9b496519fCa8473fba1af0850B6B8F476BFdB3", // RMM v3 – RealT RMM v3: Pool Proxy
+  "0x5B8D36De471880Ee21936f328AAB2383a280CB2A", // RMM v2 – LendingPool (équivalent Pool Proxy v2)
 ];
 
 /** Start of each year (Unix timestamp). */

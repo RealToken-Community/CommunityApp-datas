@@ -3,11 +3,15 @@
 /**
  * RMM borrowers on Gnosis: per user per year we output interest, interest_prorata, and rank only.
  *
- * We only use variable debt tokens (mint/burn + index and balance): getReservesList + getReserveData,
- * then Mint/Burn events on the debt tokens; interest = sum of balanceIncrease per user.
- * No pool snapshots (getUserAccountData) and no residual formula.
+ * Important: le Pool/LendingPool n’émet PAS Mint/Burn. Ces événements sont émis par les contrats
+ * VariableDebtToken (un par réserve). On fait donc :
+ *   1. Sur le pool (LendingPool v2 ou Pool v3) : getReservesList() + getReserveData(asset) pour
+ *      récupérer les adresses des VariableDebtToken.
+ *   2. On indexe Mint et Burn sur ces contrats VariableDebtToken ; interest = sum de balanceIncrease.
+ * En v2 les events n’ont pas balanceIncrease ; on utilise le champ amount (dette mint/burn) comme proxy
+ * pour indexer les users et remplir 2022/2023 (intérêt approximatif).
  *
- * If no debt tokens are found for a year, that year is skipped (no data).
+ * Pas de snapshots pool (getUserAccountData) ni formule résiduelle.
  * Output: ../data/realt_borrowers_gnosis.json
  */
 
@@ -23,6 +27,7 @@ import {
   GNOSIS_BLOCK_TIME,
   DEBT_BASE_DECIMALS,
   RESERVE_DECIMALS,
+  POOL_DEPLOYMENT_BLOCKS,
 } from "./config.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -30,21 +35,31 @@ const DATA_DIR = join(__dirname, "..", "data");
 const OUTPUT_FILE = join(DATA_DIR, "realt_borrowers_gnosis.json");
 const BASE_DECIMALS = DEBT_BASE_DECIMALS;
 
-const poolReserveAbi = JSON.parse(
+const poolReserveAbiV3 = JSON.parse(
   readFileSync(join(__dirname, "pool-reserve-abi.json"), "utf8")
 );
+const poolReserveAbiV2 = JSON.parse(
+  readFileSync(join(__dirname, "pool-reserve-abi-v2.json"), "utf8")
+);
 
-// Mint/Burn on variable debt tokens expose balanceIncrease (accrued interest)
-const debtTokenMintEvent = parseAbiItem(
+// v3 : Mint/Burn avec balanceIncrease (intérêt accru)
+const debtTokenMintEventV3 = parseAbiItem(
   "event Mint(address indexed caller, address indexed onBehalfOf, uint256 amountToMint, uint256 balanceIncrease, uint256 index)"
 );
-const debtTokenBurnEvent = parseAbiItem(
+const debtTokenBurnEventV3 = parseAbiItem(
   "event Burn(address indexed from, address indexed target, uint256 amountToBurn, uint256 balanceIncrease, uint256 index)"
+);
+// v2 : signatures différentes (pas de balanceIncrease dans l’event)
+const debtTokenMintEventV2 = parseAbiItem(
+  "event Mint(address indexed caller, address indexed onBehalfOf, uint256 amount, uint256 index)"
+);
+const debtTokenBurnEventV2 = parseAbiItem(
+  "event Burn(address indexed from, uint256 amount, uint256 index)"
 );
 
 const client = createPublicClient({
   chain: gnosis,
-  transport: http(GNOSIS_RPC, { timeout: 90_000 }),
+  transport: http(GNOSIS_RPC, { timeout: 120_000 }),
 });
 
 function sleep(ms) {
@@ -64,6 +79,7 @@ function reserveAmountToBase(amountWei, reserveAddress) {
 
 async function getLogs(addressOrAddresses, event, fromBlock, toBlock) {
   const logs = [];
+  // RPC par défaut (rpc.gnosis.gateway.fm) accepte de plus grandes plages ; réduire si "exceed maximum block range"
   const chunk = 500_000;
   let from = fromBlock;
   const addresses = Array.isArray(addressOrAddresses) ? addressOrAddresses : [addressOrAddresses];
@@ -82,38 +98,128 @@ async function getLogs(addressOrAddresses, event, fromBlock, toBlock) {
   return logs;
 }
 
-/** Returns for each pool: list of { reserve, variableDebtTokenAddress } (debt token can be zero if not set). */
-async function getReservesAndDebtTokens(blockNumber) {
-  const out = [];
-  for (const pool of RMM_POOL_ADDRESSES) {
-    let reservesList = [];
+/**
+ * Détecte l’interface d’un pool (v2 ou v3) en testant getReserveData sur la première réserve.
+ * - v3 : struct avec configuration, variableBorrowIndex, variableDebtTokenAddress, etc.
+ * - v2 : struct avec liquidityIndex, variableBorrowIndex, variableDebtTokenAddress (index 9).
+ * Retourne { abi, variableDebtKey } où variableDebtKey est le chemin pour extraire l’adresse (v3: .variableDebtTokenAddress, v2: [9]).
+ */
+async function detectPoolInterface(pool, reservesList, blockNumber) {
+  if (!reservesList?.length) return null;
+  const opts = { address: pool, args: [reservesList[0]] };
+  try {
+    await client.readContract({
+      ...opts,
+      abi: poolReserveAbiV3,
+      functionName: "getReserveData",
+      blockNumber: BigInt(blockNumber),
+    });
+    return { abi: poolReserveAbiV3, version: "v3" };
+  } catch (_) {
     try {
-      reservesList = await client.readContract({
-        address: pool,
-        abi: poolReserveAbi,
-        functionName: "getReservesList",
+      await client.readContract({
+        ...opts,
+        abi: poolReserveAbiV2,
+        functionName: "getReserveData",
         blockNumber: BigInt(blockNumber),
       });
-    } catch (e) {
-      console.warn(`getReservesList failed for pool ${pool.slice(0, 10)}…:`, e?.message || e);
-      continue;
-    }
-    for (const reserve of reservesList || []) {
+      return { abi: poolReserveAbiV2, version: "v2" };
+    } catch (_) {
       try {
-        const data = await client.readContract({
+        await client.readContract({
+          ...opts,
+          abi: poolReserveAbiV2,
+          functionName: "getReserveData",
+        });
+        return { abi: poolReserveAbiV2, version: "v2" };
+      } catch (_) {
+        return null;
+      }
+    }
+  }
+}
+
+/** Extrait variableDebtTokenAddress depuis la réponse getReserveData (v2 ou v3). */
+function getVariableDebtTokenAddress(data, version) {
+  if (!data) return null;
+  const addr = data.variableDebtTokenAddress ?? data[10] ?? data[9];
+  if (!addr || addr === "0x0000000000000000000000000000000000000000") return null;
+  return addr;
+}
+
+/**
+ * Même logique pour RMM v2 et v3 : getReservesList puis getReserveData par réserve.
+ * Mint/Burn sont comptabilisés sur les VariableDebtToken de chaque réserve (crypto) exactement
+ * comme pour la v3 : une seule boucle, mêmes événements, même agrégation par user.
+ * - On ne garde que les réserves listées dans RESERVE_DECIMALS (crypto/stablecoins, pas RealTokens).
+ * @param blockNumber - block auquel lire l’état (si le RPC ne supporte pas l’historique, fallback sans blockNumber).
+ * @param options.silent - si true, pas de log (utilisé pour la découverte par année).
+ */
+async function getReservesAndDebtTokens(blockNumber, options = {}) {
+  const { silent = false } = options;
+  const out = [];
+  for (const pool of RMM_POOL_ADDRESSES) {
+    const deploymentBlock = POOL_DEPLOYMENT_BLOCKS?.[pool.toLowerCase()];
+    if (deploymentBlock != null && blockNumber < deploymentBlock) continue;
+
+    let reservesList = [];
+    for (const abi of [poolReserveAbiV3, poolReserveAbiV2]) {
+      try {
+        reservesList = await client.readContract({
           address: pool,
-          abi: poolReserveAbi,
+          abi,
+          functionName: "getReservesList",
+          blockNumber: BigInt(blockNumber),
+        });
+        if (reservesList?.length) break;
+      } catch (_) {
+        try {
+          reservesList = await client.readContract({
+            address: pool,
+            abi,
+            functionName: "getReservesList",
+          });
+          if (reservesList?.length) break;
+        } catch (_) {}
+      }
+    }
+    if (!reservesList?.length) continue;
+
+    const iface = await detectPoolInterface(pool, reservesList, blockNumber);
+    if (!iface) continue;
+
+    let count = 0;
+    for (const reserve of reservesList) {
+      if (RESERVE_DECIMALS[reserve.toLowerCase()] == null) continue;
+      let data;
+      try {
+        data = await client.readContract({
+          address: pool,
+          abi: iface.abi,
           functionName: "getReserveData",
           args: [reserve],
           blockNumber: BigInt(blockNumber),
         });
-        const variableDebtTokenAddress = data?.variableDebtTokenAddress ?? data?.[10];
-        if (variableDebtTokenAddress && variableDebtTokenAddress !== "0x0000000000000000000000000000000000000000") {
-          out.push({ pool, reserve, variableDebtTokenAddress });
+      } catch (_) {
+        try {
+          data = await client.readContract({
+            address: pool,
+            abi: iface.abi,
+            functionName: "getReserveData",
+            args: [reserve],
+          });
+        } catch (_) {
+          data = null;
         }
-      } catch (e) {
-        // skip this reserve
       }
+      const variableDebtTokenAddress = getVariableDebtTokenAddress(data, iface.version);
+      if (variableDebtTokenAddress) {
+        out.push({ pool, reserve, variableDebtTokenAddress });
+        count++;
+      }
+    }
+    if (count > 0 && !silent) {
+      console.log(`Pool ${pool.slice(0, 10)}… (RMM ${iface.version}): ${count} debt token(s) from ${reservesList.length} reserve(s)`);
     }
   }
   return out;
@@ -154,22 +260,73 @@ async function main() {
   const byYearUser = {};
   for (const { year } of yearRanges) byYearUser[String(year)] = {};
 
+  // Découverte des debt tokens au block actuel (évite les échecs RPC sur état historique)
+  const reserveDebtTokens = await getReservesAndDebtTokens(latestBlockNumber);
+  if (reserveDebtTokens.length === 0) {
+    console.log("No variable debt tokens found for any pool; nothing to fetch.");
+    const output = { realt_borrowers_gnosis: byYearUser };
+    mkdirSync(DATA_DIR, { recursive: true });
+    writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
+    console.log(`File written: ${OUTPUT_FILE}`);
+    return;
+  }
+
   for (const { year, fromBlock, toBlock } of yearRanges) {
-    const reserveDebtTokens = await getReservesAndDebtTokens(toBlock);
-    if (reserveDebtTokens.length === 0) {
-      console.log(`Year ${year}: no variable debt tokens found (getReservesList/getReserveData); skipping (no snapshots).`);
-      continue;
+    // Essayer d’abord les debt tokens à la fin de l’année (adresses historiques) ; sinon garder la liste actuelle
+    let activeDebtTokens;
+    try {
+      const yearTokens = await getReservesAndDebtTokens(toBlock, { silent: true });
+      if (yearTokens.length > 0) {
+        activeDebtTokens = yearTokens.filter(({ pool }) => {
+          const deploymentBlock = POOL_DEPLOYMENT_BLOCKS?.[pool.toLowerCase()];
+          return deploymentBlock == null || deploymentBlock <= toBlock;
+        });
+        if (activeDebtTokens.length > 0) {
+          console.log(`Year ${year}: using debt tokens at block ${toBlock} (historical).`);
+        }
+      }
+    } catch (_) {}
+    if (!activeDebtTokens || activeDebtTokens.length === 0) {
+      activeDebtTokens = reserveDebtTokens.filter(({ pool }) => {
+        const deploymentBlock = POOL_DEPLOYMENT_BLOCKS?.[pool.toLowerCase()];
+        return deploymentBlock == null || deploymentBlock <= toBlock;
+      });
+      if (activeDebtTokens.length === 0) {
+        console.log(`Year ${year}: no pool deployed yet; skipping.`);
+        continue;
+      }
     }
 
     const debtTokenToReserve = {};
-    for (const { reserve, variableDebtTokenAddress } of reserveDebtTokens) {
+    const debtTokensByPool = {};
+    for (const { pool, reserve, variableDebtTokenAddress } of activeDebtTokens) {
       debtTokenToReserve[variableDebtTokenAddress.toLowerCase()] = reserve;
+      if (!debtTokensByPool[pool]) debtTokensByPool[pool] = [];
+      debtTokensByPool[pool].push(variableDebtTokenAddress);
     }
-    const debtTokenAddresses = reserveDebtTokens.map((r) => r.variableDebtTokenAddress);
-    const [mintLogs, burnLogs] = await Promise.all([
-      getLogs(debtTokenAddresses, debtTokenMintEvent, fromBlock, toBlock),
-      getLogs(debtTokenAddresses, debtTokenBurnEvent, fromBlock, toBlock),
-    ]);
+
+    const allMintLogs = [];
+    const allBurnLogs = [];
+    const V3_POOL = "0xfb9b496519fca8473fba1af0850b6b8f476bfdb3";
+    for (const [pool, debtTokenAddresses] of Object.entries(debtTokensByPool)) {
+      const deploymentBlock = POOL_DEPLOYMENT_BLOCKS?.[pool.toLowerCase()];
+      const adjustedFromBlock = deploymentBlock != null ? Math.max(fromBlock, deploymentBlock) : fromBlock;
+      const isV3 = pool.toLowerCase() === V3_POOL;
+      const mintEvent = isV3 ? debtTokenMintEventV3 : debtTokenMintEventV2;
+      const burnEvent = isV3 ? debtTokenBurnEventV3 : debtTokenBurnEventV2;
+      const version = isV3 ? "v3" : "v2";
+      const [mintLogs, burnLogs] = await Promise.all([
+        getLogs(debtTokenAddresses, mintEvent, adjustedFromBlock, toBlock),
+        getLogs(debtTokenAddresses, burnEvent, adjustedFromBlock, toBlock),
+      ]);
+      mintLogs.forEach((l) => { l._version = version; });
+      burnLogs.forEach((l) => { l._version = version; });
+      allMintLogs.push(...mintLogs);
+      allBurnLogs.push(...burnLogs);
+      console.log(`Year ${year} RMM ${version}: ${debtTokenAddresses.length} reserve(s), Mint ${mintLogs.length}, Burn ${burnLogs.length}`);
+    }
+    const mintLogs = allMintLogs;
+    const burnLogs = allBurnLogs;
 
     const users = new Set();
     const interestFromDebtTokenByUser = {};
@@ -178,11 +335,14 @@ async function main() {
       if (!user) continue;
       const reserve = debtTokenToReserve[log.address?.toLowerCase()];
       if (reserve == null) continue;
-      const balanceIncrease = log.args?.balanceIncrease ?? log.args?.[3];
-      if (balanceIncrease != null && balanceIncrease > 0n) {
+      // v3 : balanceIncrease = intérêt accru. v2 : pas de balanceIncrease, on utilise amount comme proxy pour indexer les users
+      const value = log._version === "v3"
+        ? (log.args?.balanceIncrease ?? log.args?.[3])
+        : (log.args?.amount ?? log.args?.[2]);
+      if (value != null && value > 0n) {
         users.add(user);
         if (!interestFromDebtTokenByUser[user]) interestFromDebtTokenByUser[user] = 0;
-        interestFromDebtTokenByUser[user] += reserveAmountToBase(balanceIncrease, reserve);
+        interestFromDebtTokenByUser[user] += reserveAmountToBase(value, reserve);
       }
     }
     for (const log of burnLogs) {
@@ -190,15 +350,17 @@ async function main() {
       if (!user) continue;
       const reserve = debtTokenToReserve[log.address?.toLowerCase()];
       if (reserve == null) continue;
-      const balanceIncrease = log.args?.balanceIncrease ?? log.args?.[3];
-      if (balanceIncrease != null && balanceIncrease > 0n) {
+      const value = log._version === "v3"
+        ? (log.args?.balanceIncrease ?? log.args?.[3])
+        : (log.args?.amount ?? log.args?.[1]);
+      if (value != null && value > 0n) {
         users.add(user);
         if (!interestFromDebtTokenByUser[user]) interestFromDebtTokenByUser[user] = 0;
-        interestFromDebtTokenByUser[user] += reserveAmountToBase(balanceIncrease, reserve);
+        interestFromDebtTokenByUser[user] += reserveAmountToBase(value, reserve);
       }
     }
 
-    console.log(`Year ${year}, debt tokens: ${debtTokenAddresses.length}, Mint ${mintLogs.length}, Burn ${burnLogs.length}`);
+    console.log(`Year ${year}, debt tokens: ${activeDebtTokens.length}, Mint ${mintLogs.length}, Burn ${burnLogs.length}`);
 
     const userList = [...users];
     if (userList.length === 0) continue;

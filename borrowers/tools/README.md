@@ -17,23 +17,27 @@ Result in CommunityApp-datas/borrowers/data/realt_borrowers_gnosis.json
 
 ## Configuration
 
-- RMM v3: Gnosis pool 0xFb9b496519fCa8473fba1af0850B6B8F476BFdB3 (already configured).
-- RMM v2: If you have the pool address, add it to config.js → RMM_POOL_ADDRESSES.
+- **RMM v3**: Pool 0xFb9b496519fCa8473fba1af0850B6B8F476BFdB3.
+- **RMM v2**: LendingPool 0x5B8D36De471880Ee21936f328AAB2383a280CB2A (même adresse que pour les liquidations).
 
 Optional environment variables:
 
-- **GNOSIS_RPC**: Gnosis RPC URL (default: https://gnosis.publicnode.com). For full history or fewer limits, use a dedicated RPC.
+- **GNOSIS_RPC**: Gnosis RPC URL (default: https://rpc.gnosis.gateway.fm). Pour l’historique 2022/2023, un RPC avec bon support des anciens blocs peut être nécessaire.
 - **YEARS**: Limit to desired years (e.g., `YEARS=2025,2026`) for faster testing.
+
+## Architecture (important)
+
+Le **Pool / LendingPool** émet **LiquidationCall** mais **n’émet pas** les événements **Mint** et **Burn** des intérêts. Ces événements sont émis par les contrats **VariableDebtToken** (un par réserve). On reconstruit l’intérêt off-chain en indexant Mint/Burn sur ces tokens.
 
 ## Calculation
 
-- **getReservesList** + **getReserveData** on the pool → list of variable debt token addresses per reserve.
-- **Mint** and **Burn** events on these tokens expose `balanceIncrease` (accrued interest). **Interest** = sum of `balanceIncrease` per user over the year (in base).
+1. **getReservesList** + **getReserveData** sur le pool → liste des adresses **VariableDebtToken** par réserve.
+2. **Mint** et **Burn** sur ces contrats VariableDebtToken → `balanceIncrease` = intérêt accru. **Interest** = somme des `balanceIncrease` par user sur l’année (en base).
 - **interest_prorata** = user's share of total interest (0–1). **rank** = ranking by interest (1 = top payer).
 
 If no variable debt tokens are found for a year (e.g. pool does not expose them), that year is skipped (no data). No fallback to snapshots or residual formula.
 
-RMM V3: OK. RMM V2: TODO?
+**Note** : Si 2022/2023 restent vides alors qu’il y a eu des liquidations v2, les debt tokens sont détectés au block actuel ; un RPC limité en état historique peut ne pas renvoyer les Mint/Burn pour ces années. Même adresse v2 (LendingPool) que pour les liquidations.
 
 ## Format
 
