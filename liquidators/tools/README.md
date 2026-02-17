@@ -53,3 +53,16 @@ Example: see `../data/exemple_data.json`.
   }
 }
 ```
+
+## DATA verification 
+
+- Gitbook documentation array : https://community-realt.gitbook.io/tuto-community/defi-realt/rmm/evaluation-du-delais-avant-liquidation
+- Link subgrah RealT: https://thegraph.com/explorer/profile/0x1bcfe8666cbb7edd3eda5d343d5f2d4ce853b034?view=Subgraphs
+
+Subgraph for RMM V2 is deprecated ?? 
+
+## Methods 
+
+V1 -> Use data onchain
+V2 -> Use TheGraph environment?
+
