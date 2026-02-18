@@ -89,6 +89,41 @@ function isRetryableRpcError(err) {
   );
 }
 
+const WRAPPER_TX_MAX_RETRIES = 5;
+const WRAPPER_TX_RETRY_DELAY_MS = 600;
+
+/** Récupère tx.from pour une tx (retries jusqu’à succès). Ne pas laisser de tx wrapper sans vrai liquidateur. */
+async function getTxFromWithRetry(txHash, blockNumber, transactionIndex) {
+  for (let attempt = 1; attempt <= WRAPPER_TX_MAX_RETRIES; attempt++) {
+    try {
+      const tx = await client.getTransaction({ hash: txHash });
+      if (tx?.from) return tx.from;
+    } catch (_) {}
+    await sleep(WRAPPER_TX_RETRY_DELAY_MS * attempt);
+  }
+  for (let attempt = 1; attempt <= WRAPPER_TX_MAX_RETRIES; attempt++) {
+    try {
+      const block = await client.getBlock({
+        blockNumber: BigInt(blockNumber),
+        includeTransactions: true,
+      });
+      const txOrHash = block.transactions?.[transactionIndex];
+      if (txOrHash && typeof txOrHash === "object" && txOrHash.from) return txOrHash.from;
+      if (typeof txOrHash === "string") {
+        for (let r = 1; r <= WRAPPER_TX_MAX_RETRIES; r++) {
+          try {
+            const tx = await client.getTransaction({ hash: txOrHash });
+            if (tx?.from) return tx.from;
+          } catch (_) {}
+          await sleep(WRAPPER_TX_RETRY_DELAY_MS * r);
+        }
+      }
+    } catch (_) {}
+    await sleep(WRAPPER_TX_RETRY_DELAY_MS * attempt);
+  }
+  return null;
+}
+
 /** Fetch one block range; on timeout/size error, split in two and retry (recursive). */
 async function fetchRangeWithRetry(addresses, event, fromBlock, toBlock, logLabel, minChunk = 10_000) {
   const size = toBlock - fromBlock + 1;
@@ -229,24 +264,30 @@ async function main() {
       const txs = await Promise.all(
         batch.map(([, e]) => client.getTransaction({ hash: e.txHash }).catch(() => null))
       );
-      const missing = [];
       batch.forEach(([h, e], j) => {
-        const from = txs[j]?.from;
-        if (from) map[h] = from;
-        else missing.push(e);
+        if (txs[j]?.from) map[h] = txs[j].from;
       });
+      await sleep(200);
+    }
+    let missing = unique.filter(([h]) => !map[h]).map(([, e]) => e);
+    const maxPasses = 3;
+    for (let pass = 1; missing.length > 0 && pass <= maxPasses; pass++) {
+      if (pass > 1) {
+        console.log(`  V3 wrapper: nouvelle tentative pour ${missing.length} tx(s) (pass ${pass}/${maxPasses})…`);
+        await sleep(1000 * pass);
+      }
       for (const e of missing) {
-        try {
-          const block = await client.getBlock({
-            blockNumber: BigInt(e.blockNumber),
-            includeTransactions: true,
-          });
-          const tx = block.transactions?.[e.transactionIndex];
-          if (tx && typeof tx === "object" && tx.from) map[e.txHash] = tx.from;
-        } catch (_) {}
+        const from = await getTxFromWithRetry(e.txHash, e.blockNumber, e.transactionIndex);
+        if (from) map[e.txHash] = from;
         await sleep(100);
       }
-      await sleep(200);
+      missing = missing.filter((e) => !map[e.txHash]);
+    }
+    if (missing.length > 0) {
+      throw new Error(
+        `V3 wrapper: impossible de récupérer tx.from pour ${missing.length} tx(s) après ${maxPasses} passes. ` +
+          `Réexécutez ou vérifiez le RPC. Ex: ${missing[0].txHash}`
+      );
     }
     return map;
   }
