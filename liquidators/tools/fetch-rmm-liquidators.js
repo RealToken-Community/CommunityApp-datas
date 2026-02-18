@@ -55,6 +55,10 @@ function blockNumberForTimestamp(referenceBlock, referenceTimestamp, targetTimes
   return referenceBlock + Math.floor(delta / GNOSIS_BLOCK_TIME);
 }
 
+function normAddr(addr) {
+  return (addr || "").toLowerCase();
+}
+
 function debtToBase(amountWei, debtAssetAddress) {
   const dec = RESERVE_DECIMALS[debtAssetAddress?.toLowerCase()] ?? 18;
   if (dec >= BASE_DECIMALS) return Number(amountWei) / 10 ** (dec - BASE_DECIMALS);
@@ -233,18 +237,19 @@ async function main() {
         const real = txFromMap[log.transactionHash];
         if (real) liquidator = real;
       }
+      const addr = normAddr(liquidator);
       const amountBase = debtToBase(debtToCover, debtAsset);
       if (isV2) {
-        if (!v2Totals[liquidator]) v2Totals[liquidator] = { amountBase: 0, count: 0 };
-        v2Totals[liquidator].amountBase += amountBase;
-        v2Totals[liquidator].count += 1;
+        if (!v2Totals[addr]) v2Totals[addr] = { amountBase: 0, count: 0 };
+        v2Totals[addr].amountBase += amountBase;
+        v2Totals[addr].count += 1;
       } else {
-        if (!v3Totals[liquidator]) v3Totals[liquidator] = { amountBase: 0, count: 0 };
-        v3Totals[liquidator].amountBase += amountBase;
-        v3Totals[liquidator].count += 1;
+        if (!v3Totals[addr]) v3Totals[addr] = { amountBase: 0, count: 0 };
+        v3Totals[addr].amountBase += amountBase;
+        v3Totals[addr].count += 1;
       }
-      if (!amountByLiquidator[liquidator]) amountByLiquidator[liquidator] = 0;
-      amountByLiquidator[liquidator] += amountBase;
+      if (!amountByLiquidator[addr]) amountByLiquidator[addr] = 0;
+      amountByLiquidator[addr] += amountBase;
     }
 
     const entries = Object.entries(amountByLiquidator);
