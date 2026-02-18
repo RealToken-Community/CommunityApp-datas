@@ -17,6 +17,9 @@ import { fileURLToPath } from "url";
 import {
   GNOSIS_RPC,
   RMM_POOL_ADDRESSES,
+  RMM_V2_POOL,
+  RMM_V3_POOL,
+  RMM_V3_WRAPPER,
   YEAR_STARTS,
   GNOSIS_BLOCK_TIME,
 } from "./config.js";
@@ -151,6 +154,12 @@ async function main() {
   const byYearLiquidator = {};
   for (const { year } of yearRanges) byYearLiquidator[String(year)] = {};
 
+  const v2Pool = RMM_V2_POOL.toLowerCase();
+  const v3Pool = RMM_V3_POOL.toLowerCase();
+  const wrapperAddr = RMM_V3_WRAPPER.toLowerCase();
+  const v2Totals = {}; // addr -> { amountBase, count }
+  const v3Totals = {};
+
   const pools = RMM_POOL_ADDRESSES.filter(Boolean);
   if (pools.length === 0) {
     console.log("No RMM pool configured in config.js (RMM_POOL_ADDRESSES).");
@@ -160,18 +169,80 @@ async function main() {
     return;
   }
 
+  async function getTxFromMap(logs) {
+    const wrapperEntries = []; // { txHash, blockNumber, transactionIndex }
+    for (const log of logs) {
+      const isV3 = (log.address || "").toLowerCase() === v3Pool;
+      const liquidator = (log.args?.liquidator || "").toLowerCase();
+      if (isV3 && liquidator === wrapperAddr)
+        wrapperEntries.push({
+          txHash: log.transactionHash,
+          blockNumber: Number(log.blockNumber),
+          transactionIndex: log.transactionIndex,
+        });
+    }
+    const byHash = new Map();
+    for (const e of wrapperEntries) byHash.set(e.txHash, e);
+    const unique = [...byHash.entries()];
+    const map = {};
+    const chunk = 50;
+    for (let i = 0; i < unique.length; i += chunk) {
+      const batch = unique.slice(i, i + chunk);
+      const txs = await Promise.all(
+        batch.map(([, e]) => client.getTransaction({ hash: e.txHash }).catch(() => null))
+      );
+      const missing = [];
+      batch.forEach(([h, e], j) => {
+        const from = txs[j]?.from;
+        if (from) map[h] = from;
+        else missing.push(e);
+      });
+      for (const e of missing) {
+        try {
+          const block = await client.getBlock({
+            blockNumber: BigInt(e.blockNumber),
+            includeTransactions: true,
+          });
+          const tx = block.transactions?.[e.transactionIndex];
+          if (tx && typeof tx === "object" && tx.from) map[e.txHash] = tx.from;
+        } catch (_) {}
+        await sleep(100);
+      }
+      await sleep(200);
+    }
+    return map;
+  }
+
   for (const { year, fromBlock, toBlock } of yearRanges) {
     console.log(`\n--- Year ${year} (blocks ${fromBlock}-${toBlock}, ${toBlock - fromBlock + 1} blocks) ---`);
     const logs = await getLogs(pools, liquidationCallEvent, fromBlock, toBlock, `year ${year}`);
     console.log(`Year ${year} done: ${logs.length} LiquidationCall event(s) found.`);
 
+    const txFromMap = await getTxFromMap(logs);
+    const wrapperTxCount = Object.keys(txFromMap).length;
+    if (wrapperTxCount > 0) console.log(`  V3 wrapper: ${wrapperTxCount} tx(s) → vrai liquidateur (tx.from)`);
+
     const amountByLiquidator = {};
     for (const log of logs) {
-      const liquidator = log.args?.liquidator;
+      let liquidator = log.args?.liquidator;
       const debtAsset = log.args?.debtAsset;
       const debtToCover = log.args?.debtToCover ?? log.args?.[3];
       if (!liquidator || debtToCover == null || debtToCover === 0n) continue;
+      const isV2 = (log.address || "").toLowerCase() === v2Pool;
+      if (!isV2 && (liquidator || "").toLowerCase() === wrapperAddr) {
+        const real = txFromMap[log.transactionHash];
+        if (real) liquidator = real;
+      }
       const amountBase = debtToBase(debtToCover, debtAsset);
+      if (isV2) {
+        if (!v2Totals[liquidator]) v2Totals[liquidator] = { amountBase: 0, count: 0 };
+        v2Totals[liquidator].amountBase += amountBase;
+        v2Totals[liquidator].count += 1;
+      } else {
+        if (!v3Totals[liquidator]) v3Totals[liquidator] = { amountBase: 0, count: 0 };
+        v3Totals[liquidator].amountBase += amountBase;
+        v3Totals[liquidator].count += 1;
+      }
       if (!amountByLiquidator[liquidator]) amountByLiquidator[liquidator] = 0;
       amountByLiquidator[liquidator] += amountBase;
     }
@@ -193,10 +264,38 @@ async function main() {
     byYearLiquidator[String(year)] = ranked;
   }
 
-  const output = { execution_script: new Date().toISOString(), realt_liquidators_gnosis: byYearLiquidator };
+  function buildRankedWithCount(totals) {
+    const entries = Object.entries(totals)
+      .map(([addr, o]) => ({
+        addr,
+        amount: Math.round((o.amountBase / divisor) * 100) / 100,
+        count: o.count ?? 0,
+      }))
+      .filter((x) => x.count > 0 || x.amount > 0)
+      .sort((a, b) => b.amount - a.amount);
+    const out = {};
+    entries.forEach(({ addr, amount, count }, i) => {
+      out[addr] = { amount, count, rank: i + 1 };
+    });
+    return out;
+  }
+
+  const v2TotalEvents = Object.values(v2Totals).reduce((s, o) => s + (o.count ?? 0), 0);
+  const v3TotalEvents = Object.values(v3Totals).reduce((s, o) => s + (o.count ?? 0), 0);
+  const liquidators_v2_total = buildRankedWithCount(v2Totals);
+  const liquidators_v3_total = buildRankedWithCount(v3Totals);
+
+  const output = {
+    execution_script: new Date().toISOString(),
+    v2_total_events: v2TotalEvents,
+    v3_total_events: v3TotalEvents,
+    liquidators_v2_total,
+    liquidators_v3_total,
+    realt_liquidators_gnosis: byYearLiquidator,
+  };
   mkdirSync(DATA_DIR, { recursive: true });
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
-  console.log(`\nFile written: ${OUTPUT_FILE}`);
+  console.log(`\nFile written: ${OUTPUT_FILE} (v2: ${v2TotalEvents}, v3: ${v3TotalEvents})`);
 }
 
 main().catch((err) => {

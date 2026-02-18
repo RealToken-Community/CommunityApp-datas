@@ -64,5 +64,5 @@ Subgraph for RMM V2 is deprecated ??
 ## Methods 
 
 V1 -> Use data onchain
-V2 -> Use TheGraph environment?
+V2 -> Use TheGraph // Why ? 
 
