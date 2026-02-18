@@ -55,6 +55,15 @@ function blockNumberForTimestamp(referenceBlock, referenceTimestamp, targetTimes
   return referenceBlock + Math.floor(delta / GNOSIS_BLOCK_TIME);
 }
 
+/** Déduit l'année à partir d'un timestamp Unix (cohérent avec YEAR_STARTS). */
+function yearFromTimestamp(ts) {
+  const years = Object.keys(YEAR_STARTS).map(Number).sort((a, b) => a - b);
+  for (let i = years.length - 1; i >= 0; i--) {
+    if (ts >= YEAR_STARTS[years[i]]) return years[i];
+  }
+  return years[0];
+}
+
 function normAddr(addr) {
   return (addr || "").toLowerCase();
 }
@@ -173,8 +182,32 @@ async function main() {
     return;
   }
 
+  /** Récupère le timestamp de chaque bloc (par batch) et retourne blockNumber → année. Si getBlock échoue, estimation par bloc. */
+  async function getBlockToYearMap(blockNumbers, refBlock, refTs) {
+    const unique = [...new Set(blockNumbers)].filter((b) => b != null);
+    const map = {};
+    const chunk = 80;
+    for (let i = 0; i < unique.length; i += chunk) {
+      const batch = unique.slice(i, i + chunk);
+      const blocks = await Promise.all(
+        batch.map((bn) => client.getBlock({ blockNumber: BigInt(bn) }).catch(() => null))
+      );
+      batch.forEach((bn, j) => {
+        const ts = blocks[j]?.timestamp;
+        if (ts != null) {
+          map[bn] = yearFromTimestamp(Number(ts));
+        } else {
+          const estimatedTs = refTs + (bn - refBlock) * GNOSIS_BLOCK_TIME;
+          map[bn] = yearFromTimestamp(estimatedTs);
+        }
+      });
+      await sleep(150);
+    }
+    return map;
+  }
+
   async function getTxFromMap(logs) {
-    const wrapperEntries = []; // { txHash, blockNumber, transactionIndex }
+    const wrapperEntries = [];
     for (const log of logs) {
       const isV3 = (log.address || "").toLowerCase() === v3Pool;
       const liquidator = (log.args?.liquidator || "").toLowerCase();
@@ -217,56 +250,67 @@ async function main() {
     return map;
   }
 
+  const allLogs = [];
   for (const { year, fromBlock, toBlock } of yearRanges) {
     console.log(`\n--- Year ${year} (blocks ${fromBlock}-${toBlock}, ${toBlock - fromBlock + 1} blocks) ---`);
     const logs = await getLogs(pools, liquidationCallEvent, fromBlock, toBlock, `year ${year}`);
     console.log(`Year ${year} done: ${logs.length} LiquidationCall event(s) found.`);
+    allLogs.push(...logs);
+  }
 
-    const txFromMap = await getTxFromMap(logs);
-    const wrapperTxCount = Object.keys(txFromMap).length;
-    if (wrapperTxCount > 0) console.log(`  V3 wrapper: ${wrapperTxCount} tx(s) → vrai liquidateur (tx.from)`);
+  console.log(`\nAttribution des années d'après le timestamp réel de chaque bloc…`);
+  const blockNumbers = allLogs.map((l) => Number(l.blockNumber));
+  const blockToYear = await getBlockToYearMap(blockNumbers, latestBlockNumber, latestTimestamp);
+  const txFromMap = await getTxFromMap(allLogs);
+  const wrapperTxCount = Object.keys(txFromMap).length;
+  if (wrapperTxCount > 0) console.log(`  V3 wrapper: ${wrapperTxCount} tx(s) → vrai liquidateur (tx.from)`);
 
-    const amountByLiquidator = {};
-    for (const log of logs) {
-      let liquidator = log.args?.liquidator;
-      const debtAsset = log.args?.debtAsset;
-      const debtToCover = log.args?.debtToCover ?? log.args?.[3];
-      if (!liquidator || debtToCover == null || debtToCover === 0n) continue;
-      const isV2 = (log.address || "").toLowerCase() === v2Pool;
-      if (!isV2 && (liquidator || "").toLowerCase() === wrapperAddr) {
-        const real = txFromMap[log.transactionHash];
-        if (real) liquidator = real;
-      }
-      const addr = normAddr(liquidator);
-      const amountBase = debtToBase(debtToCover, debtAsset);
-      if (isV2) {
-        if (!v2Totals[addr]) v2Totals[addr] = { amountBase: 0, count: 0 };
-        v2Totals[addr].amountBase += amountBase;
-        v2Totals[addr].count += 1;
-      } else {
-        if (!v3Totals[addr]) v3Totals[addr] = { amountBase: 0, count: 0 };
-        v3Totals[addr].amountBase += amountBase;
-        v3Totals[addr].count += 1;
-      }
-      if (!amountByLiquidator[addr]) amountByLiquidator[addr] = 0;
-      amountByLiquidator[addr] += amountBase;
+  const byYearAmount = {};
+  for (const log of allLogs) {
+    const blockNum = Number(log.blockNumber);
+    const year = blockToYear[blockNum];
+    if (year == null) continue;
+    let liquidator = log.args?.liquidator;
+    const debtAsset = log.args?.debtAsset;
+    const debtToCover = log.args?.debtToCover ?? log.args?.[3];
+    if (!liquidator || debtToCover == null || debtToCover === 0n) continue;
+    const isV2 = (log.address || "").toLowerCase() === v2Pool;
+    if (!isV2 && (liquidator || "").toLowerCase() === wrapperAddr) {
+      const real = txFromMap[log.transactionHash];
+      if (real) liquidator = real;
     }
+    const addr = normAddr(liquidator);
+    const amountBase = debtToBase(debtToCover, debtAsset);
+    if (isV2) {
+      if (!v2Totals[addr]) v2Totals[addr] = { amountBase: 0, count: 0 };
+      v2Totals[addr].amountBase += amountBase;
+      v2Totals[addr].count += 1;
+    } else {
+      if (!v3Totals[addr]) v3Totals[addr] = { amountBase: 0, count: 0 };
+      v3Totals[addr].amountBase += amountBase;
+      v3Totals[addr].count += 1;
+    }
+    if (!byYearAmount[year]) byYearAmount[year] = {};
+    if (!byYearAmount[year][addr]) byYearAmount[year][addr] = 0;
+    byYearAmount[year][addr] += amountBase;
+  }
 
-    const entries = Object.entries(amountByLiquidator);
-    const total = entries.reduce((acc, [, v]) => acc + v, 0);
-    const sorted = entries
-      .map(([addr, amount]) => ({
-        addr,
+  for (const year of Object.keys(byYearLiquidator)) {
+    const amountByLiquidator = byYearAmount[year] || {};
+    const entries = Object.entries(amountByLiquidator)
+      .map(([addr, amount]) => ({ addr, amount }))
+      .filter((x) => x.amount > 0)
+      .sort((a, b) => b.amount - a.amount);
+    const total = entries.reduce((acc, x) => acc + x.amount, 0);
+    const ranked = {};
+    entries.forEach(({ addr, amount }, index) => {
+      ranked[addr] = {
         amount: Math.round((amount / divisor) * 100) / 100,
         amount_prorata: total > 0 ? Math.round((amount / total) * 10000) / 10000 : 0,
-      }))
-      .sort((a, b) => b.amount - a.amount);
-
-    const ranked = {};
-    sorted.forEach(({ addr, amount, amount_prorata }, index) => {
-      ranked[addr] = { amount, amount_prorata, rank: index + 1 };
+        rank: index + 1,
+      };
     });
-    byYearLiquidator[String(year)] = ranked;
+    byYearLiquidator[year] = ranked;
   }
 
   function buildRankedWithCount(totals) {

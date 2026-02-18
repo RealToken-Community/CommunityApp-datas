@@ -1,748 +1,373 @@
 {
-  "execution_script": "2026-02-18T00:17:32.323Z",
-  "v2_total_events": 681,
-  "v3_total_events": 882,
+  "execution_script": "2026-02-18T00:34:42.248Z",
+  "v2_total_events": 255,
+  "v3_total_events": 302,
   "liquidators_v2_total": {
     "0xb2cc0d719b71fb91082e050967b644a5e55b33a0": {
       "amount": 25649.14,
       "count": 139,
       "rank": 1
     },
-    "0x5fc96c182bb7e0413c08e8e03e9d7efc6cf0b099": {
-      "amount": 25096.33,
-      "count": 405,
+    "0xa22dc341c8dd53ab1dff6e66228e779832a449bf": {
+      "amount": 8673.34,
+      "count": 72,
       "rank": 2
     },
-    "0xa22dc341c8dd53ab1dff6e66228e779832a449bf": {
-      "amount": 8762.83,
-      "count": 74,
-      "rank": 3
-    },
     "0xe5451d121040e6176476077955efc44ea5c01d48": {
-      "amount": 576.54,
-      "count": 5,
-      "rank": 4
+      "amount": 528.58,
+      "count": 4,
+      "rank": 3
     },
     "0x2a5a9aaeb65685e629e603a337b6d65cf271b169": {
       "amount": 365.39,
       "count": 3,
-      "rank": 5
+      "rank": 4
     },
     "0x46d0fb00d66d66e1a2fec6aeb670d53951c361c4": {
       "amount": 299.74,
       "count": 3,
-      "rank": 6
-    },
-    "0x134d928b26db2da678f16974580b22e799293e6c": {
-      "amount": 297.93,
-      "count": 10,
-      "rank": 7
+      "rank": 5
     },
     "0x27312f9a890a6752fcb1a2dff80116b1ace0fbe7": {
       "amount": 280.41,
       "count": 1,
-      "rank": 8
+      "rank": 6
     },
     "0xf0633940d64515379bbe743515fc14c13834d393": {
       "amount": 227.46,
       "count": 2,
-      "rank": 9
-    },
-    "0x083cfa7fd187be983ce5d519fe7ae78357779998": {
-      "amount": 190.22,
-      "count": 3,
-      "rank": 10
+      "rank": 7
     },
     "0x192cc33005abed10e1a6be7017eafe67e316a497": {
       "amount": 182.96,
       "count": 2,
-      "rank": 11
+      "rank": 8
+    },
+    "0x083cfa7fd187be983ce5d519fe7ae78357779998": {
+      "amount": 168.31,
+      "count": 2,
+      "rank": 9
     },
     "0x309ccbc93c8211c7dabfffb2fa96aaa78f9c7910": {
       "amount": 110.53,
       "count": 2,
-      "rank": 12
+      "rank": 10
     },
     "0xc788fa2cdf965ac3478c3a26162a9d49bc4f1e45": {
-      "amount": 61.58,
-      "count": 5,
-      "rank": 13
+      "amount": 57.78,
+      "count": 4,
+      "rank": 11
     },
     "0x977d8a5d31d895646f2a40d19978a6186a1ceb10": {
       "amount": 50.23,
       "count": 1,
-      "rank": 14
+      "rank": 12
     },
     "0xad77649686e3888c028e744f2f73aa2337587b03": {
       "amount": 45.69,
       "count": 1,
-      "rank": 15
-    },
-    "0xf10581d6ba3d531bc3ce9b24af359089fe7616f1": {
-      "amount": 43.65,
-      "count": 4,
-      "rank": 16
-    },
-    "0x7fbbab3a307765f42beb3d7a0b94dcbaa3240370": {
-      "amount": 42.53,
-      "count": 5,
-      "rank": 17
+      "rank": 13
     },
     "0x5430bf4d175bf007ba7b986b1475fbf0e3a532c0": {
       "amount": 40,
       "count": 1,
-      "rank": 18
+      "rank": 14
     },
     "0xd58b7f2722371aa92c929272094c3a65482c0429": {
       "amount": 25.3,
       "count": 1,
-      "rank": 19
+      "rank": 15
     },
     "0x05fc68f4b7714389a17128653f82d50bee98e542": {
       "amount": 18.29,
       "count": 6,
-      "rank": 20
+      "rank": 16
     },
     "0xc6a82e72156a11a2e1634633af5e4517b451f0d9": {
       "amount": 16.04,
       "count": 2,
-      "rank": 21
+      "rank": 17
     },
     "0xfb1cfc4ca506302cb8d1fc4c9694c0e1fc4d6d38": {
       "amount": 7.91,
       "count": 1,
-      "rank": 22
-    },
-    "0xcc34e60802c9f884ac7c8418dd2b0937cc4245db": {
-      "amount": 3.28,
-      "count": 1,
-      "rank": 23
+      "rank": 18
     },
     "0x14644807943d355f5f69e3e7936318989c320075": {
       "amount": 0.08,
       "count": 1,
-      "rank": 24
+      "rank": 19
+    },
+    "0x5fc96c182bb7e0413c08e8e03e9d7efc6cf0b099": {
+      "amount": 0.02,
+      "count": 4,
+      "rank": 20
     },
     "0x7da9a33d15413f499299687cc9d81de84684e28e": {
       "amount": 0,
       "count": 1,
-      "rank": 25
+      "rank": 21
     },
     "0x5b6082cb0beca6111e6dfc92b039df00019aac6f": {
       "amount": 0,
       "count": 1,
-      "rank": 26
+      "rank": 22
     },
     "0x8c70aa71c16d0155e4da75a7f8cf446d271296a4": {
       "amount": 0,
       "count": 1,
-      "rank": 27
+      "rank": 23
     }
   },
   "liquidators_v3_total": {
     "0xa22dc341c8dd53ab1dff6e66228e779832a449bf": {
-      "amount": 93987.15,
-      "count": 61,
+      "amount": 78405.81,
+      "count": 50,
       "rank": 1
     },
-    "0x24c47db1cc0ba028836bf808175c044055d037ec": {
-      "amount": 42222.69,
-      "count": 6,
+    "0xb2cc0d719b71fb91082e050967b644a5e55b33a0": {
+      "amount": 33245.84,
+      "count": 99,
       "rank": 2
     },
-    "0xb2cc0d719b71fb91082e050967b644a5e55b33a0": {
-      "amount": 34808.82,
-      "count": 102,
+    "0xc6a82e72156a11a2e1634633af5e4517b451f0d9": {
+      "amount": 12652.65,
+      "count": 5,
       "rank": 3
     },
-    "0xc6a82e72156a11a2e1634633af5e4517b451f0d9": {
-      "amount": 13541.63,
-      "count": 18,
-      "rank": 4
-    },
-    "0xb0e83c2d71a991017e0116d58c5765abc57384af": {
-      "amount": 11151,
-      "count": 26,
-      "rank": 5
-    },
-    "0xfac003734b5fc0a8f317cf0e7f861d05da8d79f1": {
-      "amount": 7565,
-      "count": 2,
-      "rank": 6
-    },
-    "0xb5f61afc77e4d3a7c89788252e8d4e25bdf0d38c": {
-      "amount": 7289.79,
-      "count": 18,
-      "rank": 7
-    },
-    "0xab1c40889175ea24b83175d9e09ee335ddf5a1ab": {
-      "amount": 7009.36,
-      "count": 85,
-      "rank": 8
-    },
     "0x309ccbc93c8211c7dabfffb2fa96aaa78f9c7910": {
-      "amount": 6405.2,
-      "count": 6,
-      "rank": 9
-    },
-    "0xb8894bd1f9e236f030963f5a7daee4a0f94c69d0": {
-      "amount": 5742.74,
-      "count": 3,
-      "rank": 10
-    },
-    "0xfff14378ec8d8f294ddb4e2ba6674004bacb5575": {
-      "amount": 4244.83,
-      "count": 32,
-      "rank": 11
-    },
-    "0x3515e2159dd1c15249efc3fb6721aae72f8dcb51": {
-      "amount": 3547.81,
-      "count": 2,
-      "rank": 12
-    },
-    "0x2e73b131d3308333d8b80929994f795b32022635": {
-      "amount": 3259,
-      "count": 4,
-      "rank": 13
-    },
-    "0x2afe68343f1ce5933b82d783a727c041c119614a": {
-      "amount": 3046.86,
-      "count": 41,
-      "rank": 14
-    },
-    "0x5d00572ceb25d11c774977c55feb6388e803b8d0": {
-      "amount": 2810.82,
-      "count": 12,
-      "rank": 15
-    },
-    "0x9d3680e4d49d9d168d843faf9d20ed270e1da332": {
-      "amount": 2542.67,
-      "count": 3,
-      "rank": 16
-    },
-    "0xdc0604b378adca99a9e2096707ad4830673ce5b8": {
-      "amount": 2198.6,
-      "count": 97,
-      "rank": 17
+      "amount": 6277.21,
+      "count": 5,
+      "rank": 4
     },
     "0xe5451d121040e6176476077955efc44ea5c01d48": {
       "amount": 1841.23,
       "count": 1,
-      "rank": 18
+      "rank": 5
     },
-    "0xda31f8955f9583fe9286f92f7e0ea2aff46e8d3f": {
-      "amount": 1622.02,
-      "count": 19,
-      "rank": 19
-    },
-    "0xde3a652686a4d19f90731d9877d44594f83b37e7": {
-      "amount": 1402.12,
-      "count": 27,
-      "rank": 20
+    "0x10497611ee6524d75fc45e3739f472f83e282ad5": {
+      "amount": 1562.98,
+      "count": 3,
+      "rank": 6
     },
     "0xf0542a7e93e3a4c42044ec939802608bde015464": {
-      "amount": 1367.95,
-      "count": 43,
-      "rank": 21
+      "amount": 1363.97,
+      "count": 42,
+      "rank": 7
     },
-    "0xc55cb975d31b0960d4fb85d4fcd81c8c3eb9b32f": {
-      "amount": 1130.21,
-      "count": 3,
-      "rank": 22
-    },
-    "0x68ab2ebb00757d6e38a8414c69f768c48dcd516a": {
-      "amount": 1082.11,
-      "count": 7,
-      "rank": 23
-    },
-    "0xc839cbcb7bff9c4e07e98f1c83467a67bde56ae8": {
-      "amount": 880.59,
-      "count": 16,
-      "rank": 24
+    "0xab1c40889175ea24b83175d9e09ee335ddf5a1ab": {
+      "amount": 807.47,
+      "count": 10,
+      "rank": 8
     },
     "0xfcfe12e83b7c8b34cd53b3cbd7543e0c4b2534f9": {
       "amount": 566.09,
       "count": 1,
-      "rank": 25
-    },
-    "0xa99e07efb152321117653a16727bf6bc02106892": {
-      "amount": 525.07,
-      "count": 4,
-      "rank": 26
-    },
-    "0xa5be2b01321c89b0b729cd99eacaccb8e6a96730": {
-      "amount": 516,
-      "count": 5,
-      "rank": 27
-    },
-    "0x11d92a54c29f2699147193f9f6f04b8e2c5dff35": {
-      "amount": 423.89,
-      "count": 2,
-      "rank": 28
-    },
-    "0xd0a0db7d1b651afd4ca11bf20f5bc5586347dc73": {
-      "amount": 420.46,
-      "count": 2,
-      "rank": 29
+      "rank": 9
     },
     "0xc788fa2cdf965ac3478c3a26162a9d49bc4f1e45": {
       "amount": 379.54,
       "count": 10,
-      "rank": 30
+      "rank": 10
     },
-    "0x32c77c057732d7b1776c678002c9c4e75460eb1e": {
-      "amount": 350.65,
-      "count": 2,
-      "rank": 31
-    },
-    "0x1b1ed976669f4b33f436e22cb9cd0e85b26be5a0": {
-      "amount": 350,
-      "count": 6,
-      "rank": 32
-    },
-    "0xf10581d6ba3d531bc3ce9b24af359089fe7616f1": {
-      "amount": 326.53,
+    "0x2afe68343f1ce5933b82d783a727c041c119614a": {
+      "amount": 341.6,
       "count": 13,
-      "rank": 33
-    },
-    "0xf6c992fbd5c77838ef12a69b0c9ec07ff94bdb74": {
-      "amount": 291.27,
-      "count": 5,
-      "rank": 34
-    },
-    "0x77162eb08a150e126c20e6e8d0601a3b451a5e7b": {
-      "amount": 269.21,
-      "count": 4,
-      "rank": 35
-    },
-    "0xdd3f3e36947c975ac9bd09a50eeb4530af398f11": {
-      "amount": 237.36,
-      "count": 5,
-      "rank": 36
-    },
-    "0x830ed1364ab011d5aa8acd2cf816604bff3b15fc": {
-      "amount": 234.64,
-      "count": 5,
-      "rank": 37
+      "rank": 11
     },
     "0x7f7aab3e03afd04b83d94319c7db312a8e08bd67": {
       "amount": 230.65,
       "count": 4,
-      "rank": 38
-    },
-    "0x2653ae2b7eadd861f22d7cb8ec4891955ebf68e8": {
-      "amount": 201,
-      "count": 1,
-      "rank": 39
+      "rank": 12
     },
     "0xcee6729c9005476a344c0c7aa0bf05d0a7303d8f": {
       "amount": 200,
       "count": 1,
-      "rank": 40
+      "rank": 13
     },
-    "0x083cfa7fd187be983ce5d519fe7ae78357779998": {
-      "amount": 195.65,
-      "count": 5,
-      "rank": 41
+    "0x68ab2ebb00757d6e38a8414c69f768c48dcd516a": {
+      "amount": 163.93,
+      "count": 6,
+      "rank": 14
     },
-    "0x017dd2af619d2da6264710735b85e87cd78c4fe8": {
-      "amount": 169.83,
-      "count": 1,
-      "rank": 42
-    },
-    "0x1b374e81f122dafacad97a8c215ed6edbffa63bd": {
-      "amount": 160,
-      "count": 1,
-      "rank": 43
-    },
-    "0x7ee567d2ac5dca4c422281deb1e2334a805ba6c1": {
-      "amount": 154.73,
-      "count": 1,
-      "rank": 44
-    },
-    "0x1cb0ed282f9fb272a785efae76474fa5f935d452": {
-      "amount": 136.72,
-      "count": 2,
-      "rank": 45
-    },
-    "0x87a9c2a5a528381ec8cca57aa2b01ef183c4e1b7": {
-      "amount": 126.3,
+    "0xdc0604b378adca99a9e2096707ad4830673ce5b8": {
+      "amount": 123.55,
       "count": 10,
-      "rank": 46
+      "rank": 15
     },
     "0x47cab4912d64fff451bcdd0ea8a5fc48ba7ee8ac": {
       "amount": 120,
       "count": 1,
-      "rank": 47
+      "rank": 16
     },
     "0x39e7510977e9514acb4e3efcb3a9ffab0440cbc2": {
       "amount": 110.36,
       "count": 2,
-      "rank": 48
-    },
-    "0x587cb1c9a24608aeca52c243987bd8de6a81350c": {
-      "amount": 105,
-      "count": 9,
-      "rank": 49
+      "rank": 17
     },
     "0xe72379b527824a8bdf07ec8a162d1e0eeb673ee6": {
       "amount": 104,
       "count": 3,
-      "rank": 50
-    },
-    "0x7ffe8771fdc04f045aba6a764a36d07be88bc6e4": {
-      "amount": 102.56,
-      "count": 2,
-      "rank": 51
-    },
-    "0x4cc6ecdbfc8afde7085bb8a7848b689a49175bea": {
-      "amount": 102,
-      "count": 1,
-      "rank": 52
-    },
-    "0x8f04826edc7a6a4fc60a58b440af155b2ea40856": {
-      "amount": 100.58,
-      "count": 1,
-      "rank": 53
-    },
-    "0xce0603476a41afe406a77093b86c1d274eb92d65": {
-      "amount": 100.39,
-      "count": 4,
-      "rank": 54
+      "rank": 18
     },
     "0xcbcdca647cfda9283992193604f8718a910b42fc": {
       "amount": 100,
       "count": 1,
-      "rank": 55
+      "rank": 19
     },
-    "0x8b8e219b7531dbebb8782c479f7ed3c71827b68f": {
+    "0x1b1ed976669f4b33f436e22cb9cd0e85b26be5a0": {
       "amount": 100,
       "count": 1,
-      "rank": 56
-    },
-    "0x46426750dc069953b3d78979fd5743c28d8f7596": {
-      "amount": 100,
-      "count": 1,
-      "rank": 57
-    },
-    "0x97e7634be705079ad6769904b1babd82960df851": {
-      "amount": 100,
-      "count": 1,
-      "rank": 58
-    },
-    "0xb2736e9cefafc7f3a504511df4140fb592623f8d": {
-      "amount": 96,
-      "count": 2,
-      "rank": 59
-    },
-    "0xa5ed8da239f400141427800da33b602a039f2254": {
-      "amount": 85.93,
-      "count": 10,
-      "rank": 60
+      "rank": 20
     },
     "0x6e9c821c6b3d56c11ef85070df079f0e652d530c": {
       "amount": 74.25,
       "count": 4,
-      "rank": 61
-    },
-    "0xd82f33cb12c573f4dd3c928b0aefbf4d3f8ae962": {
-      "amount": 70.01,
-      "count": 2,
-      "rank": 62
-    },
-    "0x875094dc0ddf541542da0c88da46f301c80e2295": {
-      "amount": 63.16,
-      "count": 1,
-      "rank": 63
-    },
-    "0xef5668da056ea0a5ef13cde9fb934d42eb006847": {
-      "amount": 60.01,
-      "count": 5,
-      "rank": 64
+      "rank": 21
     },
     "0x3a643c2c0c5617d827118e2654a001a84af04258": {
       "amount": 57.6,
       "count": 1,
-      "rank": 65
-    },
-    "0x3063d161518a19fff591247ead5a99063436827f": {
-      "amount": 57.36,
-      "count": 2,
-      "rank": 66
+      "rank": 22
     },
     "0x5fadc6f31767b15c1000a430947334dc96d1d5cc": {
       "amount": 56.3,
       "count": 1,
-      "rank": 67
-    },
-    "0x935bbd6391d62cebf7901fc488336f671bfad76b": {
-      "amount": 56.22,
-      "count": 2,
-      "rank": 68
-    },
-    "0x1513cfeee6a5f0e6ea29ac33250ea6a15ba2ab0f": {
-      "amount": 50.4,
-      "count": 8,
-      "rank": 69
-    },
-    "0xfe7a5f096ca51f9dee3b19a59314420ba1b1592f": {
-      "amount": 50.4,
-      "count": 1,
-      "rank": 70
-    },
-    "0xebd1159122883ecc045ad7d7b9f3ccaeae0e67d9": {
-      "amount": 50.11,
-      "count": 1,
-      "rank": 71
-    },
-    "0x8ca9b1d47c780cd6b458595083575082dbd6d6e3": {
-      "amount": 49,
-      "count": 1,
-      "rank": 72
+      "rank": 23
     },
     "0x3aa597f32de7c532af0f238da736fb7fe371cc47": {
       "amount": 43.7,
       "count": 2,
-      "rank": 73
+      "rank": 24
     },
-    "0x8b2f32ce4694cf8bc614e8efea4b9972a79542fc": {
-      "amount": 40,
-      "count": 1,
-      "rank": 74
+    "0x87a9c2a5a528381ec8cca57aa2b01ef183c4e1b7": {
+      "amount": 32.89,
+      "count": 5,
+      "rank": 25
     },
     "0x96f4b5403fae3b14c469f5ce536d2f1483370869": {
       "amount": 27.98,
       "count": 2,
-      "rank": 75
-    },
-    "0xe7c7c42f624539323144db8022bcebe0a4d0a07b": {
-      "amount": 26.19,
-      "count": 1,
-      "rank": 76
+      "rank": 26
     },
     "0x3ab7ba39572107d926821d3b4a605fe95f42ab59": {
       "amount": 25.87,
       "count": 2,
-      "rank": 77
+      "rank": 27
     },
     "0x9b552909d8d09abdc2ee0fd7851e827111786a9f": {
-      "amount": 25.4,
-      "count": 2,
-      "rank": 78
-    },
-    "0x8fbe912b45d3342bd40307a31544540a65e36427": {
-      "amount": 25,
+      "amount": 17.79,
       "count": 1,
-      "rank": 79
-    },
-    "0xb0c6d7085fa8ccc6c174841495eb700130ea2e97": {
-      "amount": 24.14,
-      "count": 5,
-      "rank": 80
-    },
-    "0xaad52333ee571a5c8a3ab4aa072c2ee0ba0302b6": {
-      "amount": 20.41,
-      "count": 3,
-      "rank": 81
-    },
-    "0xe0d01efee7a9740f8e702f086dd4fcae87926abf": {
-      "amount": 20,
-      "count": 1,
-      "rank": 82
-    },
-    "0x01b1767ca4e97cb44845400b39043c6e352d31d9": {
-      "amount": 17.84,
-      "count": 2,
-      "rank": 83
+      "rank": 28
     },
     "0x7e6a4e73694c7f7abe7222d665f874520ad36d2c": {
       "amount": 16.04,
       "count": 3,
-      "rank": 84
-    },
-    "0x9cd81e91fa8bc96c5ef3d15030e1e3351e4ece02": {
-      "amount": 15.77,
-      "count": 1,
-      "rank": 85
+      "rank": 29
     },
     "0x62a7a818d88f848c7718e3dc454028401d2b53b2": {
       "amount": 12.9,
       "count": 1,
-      "rank": 86
+      "rank": 30
     },
-    "0x0953b680f76f85a25855364cbf6ff05d4ab21e6e": {
-      "amount": 12.14,
-      "count": 3,
-      "rank": 87
-    },
-    "0xdeb29406f61e49cc33f2c8153e0a70dd9b1c308d": {
-      "amount": 11.42,
-      "count": 2,
-      "rank": 88
+    "0x3063d161518a19fff591247ead5a99063436827f": {
+      "amount": 12.77,
+      "count": 1,
+      "rank": 31
     },
     "0xce462148c5dc644085667fb4dcf67722b505d320": {
       "amount": 10.46,
       "count": 2,
-      "rank": 89
-    },
-    "0x9566e3e6f55d4378243e55de8e037ee8e6e4de7e": {
-      "amount": 10.3,
-      "count": 2,
-      "rank": 90
+      "rank": 32
     },
     "0x05fc68f4b7714389a17128653f82d50bee98e542": {
       "amount": 10,
       "count": 1,
-      "rank": 91
-    },
-    "0x622344eec92c3de736e19ffbbe6e9cc017b2c6fe": {
-      "amount": 10,
-      "count": 2,
-      "rank": 92
-    },
-    "0x529f288298fe949c9c5c3323554c782db5021ed0": {
-      "amount": 10,
-      "count": 11,
-      "rank": 93
+      "rank": 33
     },
     "0xfffb772047e71f43ed6b5ae3a1681456154a4e32": {
       "amount": 9.9,
       "count": 1,
-      "rank": 94
-    },
-    "0xe8a7fe3b74b61642a938f217e8c117ff922d5e47": {
-      "amount": 9,
-      "count": 1,
-      "rank": 95
-    },
-    "0xb16f66f82e026e530d2586841f05b5aee4581ae3": {
-      "amount": 7.57,
-      "count": 1,
-      "rank": 96
-    },
-    "0xc02be9069082770d5b249f98b584d22a7599e8e0": {
-      "amount": 6.76,
-      "count": 7,
-      "rank": 97
+      "rank": 34
     },
     "0x37860b28f8cbd4b0cbed92e1416237981d7557e8": {
       "amount": 5.75,
       "count": 1,
-      "rank": 98
-    },
-    "0xad6d1c6bbdac1f1890cd070a5372781062e267a9": {
-      "amount": 4.98,
-      "count": 1,
-      "rank": 99
+      "rank": 35
     },
     "0xf0633940d64515379bbe743515fc14c13834d393": {
       "amount": 4.11,
       "count": 1,
-      "rank": 100
+      "rank": 36
+    },
+    "0xd82f33cb12c573f4dd3c928b0aefbf4d3f8ae962": {
+      "amount": 4.01,
+      "count": 1,
+      "rank": 37
     },
     "0x8595fa9bfba5e69c4f5e406fcef189f2b4de79f4": {
       "amount": 3.79,
       "count": 1,
-      "rank": 101
+      "rank": 38
     },
-    "0xdb69bea5ea01990eb454c0e36ea744b993f427f1": {
-      "amount": 3.69,
-      "count": 2,
-      "rank": 102
-    },
-    "0x032800d30d1c84c752a7b37193a375a2d9669a1a": {
-      "amount": 3.18,
-      "count": 10,
-      "rank": 103
-    },
-    "0x83fc27bc5fa8d6465b56cc77a4e28b1b8ce60e71": {
-      "amount": 3.04,
-      "count": 2,
-      "rank": 104
-    },
-    "0x78b78f8fe3bfce96459e48ca61b05d73fda541fb": {
-      "amount": 2.42,
-      "count": 2,
-      "rank": 105
+    "0x7ffe8771fdc04f045aba6a764a36d07be88bc6e4": {
+      "amount": 2.56,
+      "count": 1,
+      "rank": 39
     },
     "0x134d928b26db2da678f16974580b22e799293e6c": {
       "amount": 2.28,
       "count": 1,
-      "rank": 106
-    },
-    "0xcc34e60802c9f884ac7c8418dd2b0937cc4245db": {
-      "amount": 2.26,
-      "count": 1,
-      "rank": 107
-    },
-    "0xdcbfa46248c0b4d6eb405bb45065d34b7f88dc08": {
-      "amount": 2,
-      "count": 2,
-      "rank": 108
-    },
-    "0x26063d0a5bdba1d8d6c2380009450760519452c8": {
-      "amount": 1.68,
-      "count": 1,
-      "rank": 109
-    },
-    "0xebd594bebf68a71bdcf37e5323c779abffc23457": {
-      "amount": 1.38,
-      "count": 1,
-      "rank": 110
+      "rank": 40
     },
     "0xef00178853100870990be5cd18a1dbf153426c0f": {
       "amount": 1,
       "count": 1,
-      "rank": 111
-    },
-    "0x98b14f89e57cce69d8f04d2526b70c6202ae10ee": {
-      "amount": 0.03,
-      "count": 1,
-      "rank": 112
-    },
-    "0xc0663c371427bf1ee7910ff1eec2b03f76388740": {
-      "amount": 0.02,
-      "count": 2,
-      "rank": 113
+      "rank": 41
     }
   },
   "realt_liquidators_gnosis": {
     "2022": {
       "0x27312f9a890a6752fcb1a2dff80116b1ace0fbe7": {
         "amount": 280.41,
-        "amount_prorata": 1,
+        "amount_prorata": 0.8606,
         "rank": 1
+      },
+      "0xf0633940d64515379bbe743515fc14c13834d393": {
+        "amount": 45.41,
+        "amount_prorata": 0.1394,
+        "rank": 2
       }
     },
     "2023": {
       "0xb2cc0d719b71fb91082e050967b644a5e55b33a0": {
-        "amount": 5604.03,
-        "amount_prorata": 0.815,
+        "amount": 5642.11,
+        "amount_prorata": 0.8183,
         "rank": 1
       },
       "0x2a5a9aaeb65685e629e603a337b6d65cf271b169": {
         "amount": 365.39,
-        "amount_prorata": 0.0531,
+        "amount_prorata": 0.053,
         "rank": 2
       },
       "0x46d0fb00d66d66e1a2fec6aeb670d53951c361c4": {
         "amount": 299.74,
-        "amount_prorata": 0.0436,
+        "amount_prorata": 0.0435,
         "rank": 3
-      },
-      "0xf0633940d64515379bbe743515fc14c13834d393": {
-        "amount": 227.46,
-        "amount_prorata": 0.0331,
-        "rank": 4
       },
       "0x192cc33005abed10e1a6be7017eafe67e316a497": {
         "amount": 182.96,
-        "amount_prorata": 0.0266,
+        "amount_prorata": 0.0265,
+        "rank": 4
+      },
+      "0xf0633940d64515379bbe743515fc14c13834d393": {
+        "amount": 182.05,
+        "amount_prorata": 0.0264,
         "rank": 5
       },
       "0xa22dc341c8dd53ab1dff6e66228e779832a449bf": {
-        "amount": 81.41,
-        "amount_prorata": 0.0118,
+        "amount": 107.41,
+        "amount_prorata": 0.0156,
         "rank": 6
       },
       "0x977d8a5d31d895646f2a40d19978a6186a1ceb10": {
@@ -763,719 +388,263 @@
     },
     "2024": {
       "0xb2cc0d719b71fb91082e050967b644a5e55b33a0": {
-        "amount": 14640,
-        "amount_prorata": 0.7775,
+        "amount": 13501.23,
+        "amount_prorata": 0.6974,
         "rank": 1
       },
       "0xa22dc341c8dd53ab1dff6e66228e779832a449bf": {
-        "amount": 4144.42,
-        "amount_prorata": 0.2201,
+        "amount": 4249.3,
+        "amount_prorata": 0.2195,
         "rank": 2
+      },
+      "0x10497611ee6524d75fc45e3739f472f83e282ad5": {
+        "amount": 1562.98,
+        "amount_prorata": 0.0807,
+        "rank": 3
       },
       "0xad77649686e3888c028e744f2f73aa2337587b03": {
         "amount": 45.69,
         "amount_prorata": 0.0024,
-        "rank": 3
+        "rank": 4
       },
       "0x5fc96c182bb7e0413c08e8e03e9d7efc6cf0b099": {
         "amount": 0.02,
         "amount_prorata": 0,
-        "rank": 4
+        "rank": 5
       },
       "0x7da9a33d15413f499299687cc9d81de84684e28e": {
         "amount": 0,
         "amount_prorata": 0,
-        "rank": 5
+        "rank": 6
       },
       "0x5b6082cb0beca6111e6dfc92b039df00019aac6f": {
         "amount": 0,
         "amount_prorata": 0,
-        "rank": 6
+        "rank": 7
       }
     },
     "2025": {
       "0xa22dc341c8dd53ab1dff6e66228e779832a449bf": {
-        "amount": 96904.97,
-        "amount_prorata": 0.4973,
+        "amount": 82722.44,
+        "amount_prorata": 0.5541,
         "rank": 1
       },
       "0xb2cc0d719b71fb91082e050967b644a5e55b33a0": {
-        "amount": 40213.94,
-        "amount_prorata": 0.2064,
+        "amount": 39751.65,
+        "amount_prorata": 0.2663,
         "rank": 2
       },
       "0xc6a82e72156a11a2e1634633af5e4517b451f0d9": {
-        "amount": 12964.42,
-        "amount_prorata": 0.0665,
+        "amount": 12668.69,
+        "amount_prorata": 0.0849,
         "rank": 3
       },
       "0x309ccbc93c8211c7dabfffb2fa96aaa78f9c7910": {
-        "amount": 6515.74,
-        "amount_prorata": 0.0334,
+        "amount": 6387.75,
+        "amount_prorata": 0.0428,
         "rank": 4
       },
-      "0xb5f61afc77e4d3a7c89788252e8d4e25bdf0d38c": {
-        "amount": 6017.6,
-        "amount_prorata": 0.0309,
+      "0xe5451d121040e6176476077955efc44ea5c01d48": {
+        "amount": 2369.81,
+        "amount_prorata": 0.0159,
         "rank": 5
       },
-      "0xb8894bd1f9e236f030963f5a7daee4a0f94c69d0": {
-        "amount": 5742.74,
-        "amount_prorata": 0.0295,
+      "0xf0542a7e93e3a4c42044ec939802608bde015464": {
+        "amount": 1363.97,
+        "amount_prorata": 0.0091,
         "rank": 6
       },
       "0xab1c40889175ea24b83175d9e09ee335ddf5a1ab": {
-        "amount": 4774.13,
-        "amount_prorata": 0.0245,
+        "amount": 807.47,
+        "amount_prorata": 0.0054,
         "rank": 7
-      },
-      "0xfff14378ec8d8f294ddb4e2ba6674004bacb5575": {
-        "amount": 4087.64,
-        "amount_prorata": 0.021,
-        "rank": 8
-      },
-      "0x3515e2159dd1c15249efc3fb6721aae72f8dcb51": {
-        "amount": 3547.81,
-        "amount_prorata": 0.0182,
-        "rank": 9
-      },
-      "0x2afe68343f1ce5933b82d783a727c041c119614a": {
-        "amount": 2592.47,
-        "amount_prorata": 0.0133,
-        "rank": 10
-      },
-      "0xe5451d121040e6176476077955efc44ea5c01d48": {
-        "amount": 2417.77,
-        "amount_prorata": 0.0124,
-        "rank": 11
-      },
-      "0xf0542a7e93e3a4c42044ec939802608bde015464": {
-        "amount": 1367.95,
-        "amount_prorata": 0.007,
-        "rank": 12
-      },
-      "0xde3a652686a4d19f90731d9877d44594f83b37e7": {
-        "amount": 946.66,
-        "amount_prorata": 0.0049,
-        "rank": 13
-      },
-      "0x5fc96c182bb7e0413c08e8e03e9d7efc6cf0b099": {
-        "amount": 799.16,
-        "amount_prorata": 0.0041,
-        "rank": 14
       },
       "0xfcfe12e83b7c8b34cd53b3cbd7543e0c4b2534f9": {
         "amount": 566.09,
-        "amount_prorata": 0.0029,
-        "rank": 15
-      },
-      "0xa99e07efb152321117653a16727bf6bc02106892": {
-        "amount": 525.07,
-        "amount_prorata": 0.0027,
-        "rank": 16
+        "amount_prorata": 0.0038,
+        "rank": 8
       },
       "0xc788fa2cdf965ac3478c3a26162a9d49bc4f1e45": {
-        "amount": 441.12,
+        "amount": 437.32,
+        "amount_prorata": 0.0029,
+        "rank": 9
+      },
+      "0x2afe68343f1ce5933b82d783a727c041c119614a": {
+        "amount": 341.6,
         "amount_prorata": 0.0023,
-        "rank": 17
-      },
-      "0x1b1ed976669f4b33f436e22cb9cd0e85b26be5a0": {
-        "amount": 350,
-        "amount_prorata": 0.0018,
-        "rank": 18
-      },
-      "0xc839cbcb7bff9c4e07e98f1c83467a67bde56ae8": {
-        "amount": 341.34,
-        "amount_prorata": 0.0018,
-        "rank": 19
-      },
-      "0x134d928b26db2da678f16974580b22e799293e6c": {
-        "amount": 300.21,
-        "amount_prorata": 0.0015,
-        "rank": 20
-      },
-      "0xf10581d6ba3d531bc3ce9b24af359089fe7616f1": {
-        "amount": 267.11,
-        "amount_prorata": 0.0014,
-        "rank": 21
-      },
-      "0xdc0604b378adca99a9e2096707ad4830673ce5b8": {
-        "amount": 263.71,
-        "amount_prorata": 0.0014,
-        "rank": 22
+        "rank": 10
       },
       "0x7f7aab3e03afd04b83d94319c7db312a8e08bd67": {
         "amount": 230.65,
-        "amount_prorata": 0.0012,
-        "rank": 23
+        "amount_prorata": 0.0015,
+        "rank": 11
       },
       "0xcee6729c9005476a344c0c7aa0bf05d0a7303d8f": {
         "amount": 200,
-        "amount_prorata": 0.001,
-        "rank": 24
-      },
-      "0x77162eb08a150e126c20e6e8d0601a3b451a5e7b": {
-        "amount": 194.21,
-        "amount_prorata": 0.001,
-        "rank": 25
+        "amount_prorata": 0.0013,
+        "rank": 12
       },
       "0x083cfa7fd187be983ce5d519fe7ae78357779998": {
-        "amount": 190.22,
-        "amount_prorata": 0.001,
-        "rank": 26
+        "amount": 168.31,
+        "amount_prorata": 0.0011,
+        "rank": 13
       },
       "0x68ab2ebb00757d6e38a8414c69f768c48dcd516a": {
         "amount": 163.93,
-        "amount_prorata": 0.0008,
-        "rank": 27
+        "amount_prorata": 0.0011,
+        "rank": 14
       },
-      "0x1b374e81f122dafacad97a8c215ed6edbffa63bd": {
-        "amount": 160,
+      "0xdc0604b378adca99a9e2096707ad4830673ce5b8": {
+        "amount": 123.55,
         "amount_prorata": 0.0008,
-        "rank": 28
-      },
-      "0x87a9c2a5a528381ec8cca57aa2b01ef183c4e1b7": {
-        "amount": 126.3,
-        "amount_prorata": 0.0006,
-        "rank": 29
+        "rank": 15
       },
       "0x47cab4912d64fff451bcdd0ea8a5fc48ba7ee8ac": {
         "amount": 120,
-        "amount_prorata": 0.0006,
-        "rank": 30
+        "amount_prorata": 0.0008,
+        "rank": 16
       },
       "0x39e7510977e9514acb4e3efcb3a9ffab0440cbc2": {
         "amount": 110.36,
-        "amount_prorata": 0.0006,
-        "rank": 31
+        "amount_prorata": 0.0007,
+        "rank": 17
       },
       "0xe72379b527824a8bdf07ec8a162d1e0eeb673ee6": {
         "amount": 104,
-        "amount_prorata": 0.0005,
-        "rank": 32
-      },
-      "0x7ffe8771fdc04f045aba6a764a36d07be88bc6e4": {
-        "amount": 102.56,
-        "amount_prorata": 0.0005,
-        "rank": 33
-      },
-      "0x4cc6ecdbfc8afde7085bb8a7848b689a49175bea": {
-        "amount": 102,
-        "amount_prorata": 0.0005,
-        "rank": 34
-      },
-      "0xa5be2b01321c89b0b729cd99eacaccb8e6a96730": {
-        "amount": 102,
-        "amount_prorata": 0.0005,
-        "rank": 35
-      },
-      "0xce0603476a41afe406a77093b86c1d274eb92d65": {
-        "amount": 100.39,
-        "amount_prorata": 0.0005,
-        "rank": 36
+        "amount_prorata": 0.0007,
+        "rank": 18
       },
       "0xcbcdca647cfda9283992193604f8718a910b42fc": {
         "amount": 100,
-        "amount_prorata": 0.0005,
-        "rank": 37
+        "amount_prorata": 0.0007,
+        "rank": 19
       },
-      "0x8b8e219b7531dbebb8782c479f7ed3c71827b68f": {
+      "0x1b1ed976669f4b33f436e22cb9cd0e85b26be5a0": {
         "amount": 100,
-        "amount_prorata": 0.0005,
-        "rank": 38
+        "amount_prorata": 0.0007,
+        "rank": 20
       },
       "0x6e9c821c6b3d56c11ef85070df079f0e652d530c": {
         "amount": 74.25,
-        "amount_prorata": 0.0004,
-        "rank": 39
+        "amount_prorata": 0.0005,
+        "rank": 21
       },
       "0x3a643c2c0c5617d827118e2654a001a84af04258": {
         "amount": 57.6,
-        "amount_prorata": 0.0003,
-        "rank": 40
-      },
-      "0x3063d161518a19fff591247ead5a99063436827f": {
-        "amount": 57.36,
-        "amount_prorata": 0.0003,
-        "rank": 41
+        "amount_prorata": 0.0004,
+        "rank": 22
       },
       "0x5fadc6f31767b15c1000a430947334dc96d1d5cc": {
         "amount": 56.3,
-        "amount_prorata": 0.0003,
-        "rank": 42
-      },
-      "0xdd3f3e36947c975ac9bd09a50eeb4530af398f11": {
-        "amount": 52.36,
-        "amount_prorata": 0.0003,
-        "rank": 43
-      },
-      "0xebd1159122883ecc045ad7d7b9f3ccaeae0e67d9": {
-        "amount": 50.11,
-        "amount_prorata": 0.0003,
-        "rank": 44
-      },
-      "0x8ca9b1d47c780cd6b458595083575082dbd6d6e3": {
-        "amount": 49,
-        "amount_prorata": 0.0003,
-        "rank": 45
+        "amount_prorata": 0.0004,
+        "rank": 23
       },
       "0x3aa597f32de7c532af0f238da736fb7fe371cc47": {
         "amount": 43.7,
+        "amount_prorata": 0.0003,
+        "rank": 24
+      },
+      "0x87a9c2a5a528381ec8cca57aa2b01ef183c4e1b7": {
+        "amount": 32.89,
         "amount_prorata": 0.0002,
-        "rank": 46
+        "rank": 25
       },
       "0x05fc68f4b7714389a17128653f82d50bee98e542": {
         "amount": 28.29,
-        "amount_prorata": 0.0001,
-        "rank": 47
+        "amount_prorata": 0.0002,
+        "rank": 26
       },
       "0x96f4b5403fae3b14c469f5ce536d2f1483370869": {
         "amount": 27.98,
-        "amount_prorata": 0.0001,
-        "rank": 48
-      },
-      "0xe7c7c42f624539323144db8022bcebe0a4d0a07b": {
-        "amount": 26.19,
-        "amount_prorata": 0.0001,
-        "rank": 49
+        "amount_prorata": 0.0002,
+        "rank": 27
       },
       "0x3ab7ba39572107d926821d3b4a605fe95f42ab59": {
         "amount": 25.87,
-        "amount_prorata": 0.0001,
-        "rank": 50
+        "amount_prorata": 0.0002,
+        "rank": 28
       },
       "0x9b552909d8d09abdc2ee0fd7851e827111786a9f": {
-        "amount": 25.4,
+        "amount": 17.79,
         "amount_prorata": 0.0001,
-        "rank": 51
-      },
-      "0xe0d01efee7a9740f8e702f086dd4fcae87926abf": {
-        "amount": 20,
-        "amount_prorata": 0.0001,
-        "rank": 52
+        "rank": 29
       },
       "0x7e6a4e73694c7f7abe7222d665f874520ad36d2c": {
         "amount": 16.04,
         "amount_prorata": 0.0001,
-        "rank": 53
-      },
-      "0x9cd81e91fa8bc96c5ef3d15030e1e3351e4ece02": {
-        "amount": 15.77,
-        "amount_prorata": 0.0001,
-        "rank": 54
+        "rank": 30
       },
       "0x62a7a818d88f848c7718e3dc454028401d2b53b2": {
         "amount": 12.9,
         "amount_prorata": 0.0001,
-        "rank": 55
+        "rank": 31
       },
-      "0xdeb29406f61e49cc33f2c8153e0a70dd9b1c308d": {
-        "amount": 11.42,
+      "0x3063d161518a19fff591247ead5a99063436827f": {
+        "amount": 12.77,
         "amount_prorata": 0.0001,
-        "rank": 56
+        "rank": 32
       },
       "0xce462148c5dc644085667fb4dcf67722b505d320": {
         "amount": 10.46,
         "amount_prorata": 0.0001,
-        "rank": 57
+        "rank": 33
       },
       "0xfffb772047e71f43ed6b5ae3a1681456154a4e32": {
         "amount": 9.9,
         "amount_prorata": 0.0001,
-        "rank": 58
+        "rank": 34
       },
       "0xfb1cfc4ca506302cb8d1fc4c9694c0e1fc4d6d38": {
         "amount": 7.91,
-        "amount_prorata": 0,
-        "rank": 59
-      },
-      "0xb16f66f82e026e530d2586841f05b5aee4581ae3": {
-        "amount": 7.57,
-        "amount_prorata": 0,
-        "rank": 60
+        "amount_prorata": 0.0001,
+        "rank": 35
       },
       "0x37860b28f8cbd4b0cbed92e1416237981d7557e8": {
         "amount": 5.75,
         "amount_prorata": 0,
-        "rank": 61
-      },
-      "0xcc34e60802c9f884ac7c8418dd2b0937cc4245db": {
-        "amount": 5.54,
-        "amount_prorata": 0,
-        "rank": 62
+        "rank": 36
       },
       "0xf0633940d64515379bbe743515fc14c13834d393": {
         "amount": 4.11,
         "amount_prorata": 0,
-        "rank": 63
+        "rank": 37
       },
       "0xd82f33cb12c573f4dd3c928b0aefbf4d3f8ae962": {
         "amount": 4.01,
         "amount_prorata": 0,
-        "rank": 64
+        "rank": 38
       },
       "0x8595fa9bfba5e69c4f5e406fcef189f2b4de79f4": {
         "amount": 3.79,
         "amount_prorata": 0,
-        "rank": 65
+        "rank": 39
       },
-      "0x0953b680f76f85a25855364cbf6ff05d4ab21e6e": {
-        "amount": 2.8,
+      "0x7ffe8771fdc04f045aba6a764a36d07be88bc6e4": {
+        "amount": 2.56,
         "amount_prorata": 0,
-        "rank": 66
+        "rank": 40
       },
-      "0xdcbfa46248c0b4d6eb405bb45065d34b7f88dc08": {
-        "amount": 2,
+      "0x134d928b26db2da678f16974580b22e799293e6c": {
+        "amount": 2.28,
         "amount_prorata": 0,
-        "rank": 67
+        "rank": 41
       },
       "0xef00178853100870990be5cd18a1dbf153426c0f": {
         "amount": 1,
         "amount_prorata": 0,
-        "rank": 68
+        "rank": 42
       },
       "0x14644807943d355f5f69e3e7936318989c320075": {
         "amount": 0.08,
         "amount_prorata": 0,
-        "rank": 69
-      },
-      "0x98b14f89e57cce69d8f04d2526b70c6202ae10ee": {
-        "amount": 0.03,
-        "amount_prorata": 0,
-        "rank": 70
+        "rank": 43
       },
       "0x8c70aa71c16d0155e4da75a7f8cf446d271296a4": {
         "amount": 0,
         "amount_prorata": 0,
-        "rank": 71
+        "rank": 44
       }
     },
-    "2026": {
-      "0x24c47db1cc0ba028836bf808175c044055d037ec": {
-        "amount": 42222.69,
-        "amount_prorata": 0.3793,
-        "rank": 1
-      },
-      "0x5fc96c182bb7e0413c08e8e03e9d7efc6cf0b099": {
-        "amount": 24297.16,
-        "amount_prorata": 0.2183,
-        "rank": 2
-      },
-      "0xb0e83c2d71a991017e0116d58c5765abc57384af": {
-        "amount": 11151,
-        "amount_prorata": 0.1002,
-        "rank": 3
-      },
-      "0xfac003734b5fc0a8f317cf0e7f861d05da8d79f1": {
-        "amount": 7565,
-        "amount_prorata": 0.068,
-        "rank": 4
-      },
-      "0x2e73b131d3308333d8b80929994f795b32022635": {
-        "amount": 3259,
-        "amount_prorata": 0.0293,
-        "rank": 5
-      },
-      "0x5d00572ceb25d11c774977c55feb6388e803b8d0": {
-        "amount": 2810.82,
-        "amount_prorata": 0.0253,
-        "rank": 6
-      },
-      "0x9d3680e4d49d9d168d843faf9d20ed270e1da332": {
-        "amount": 2542.67,
-        "amount_prorata": 0.0228,
-        "rank": 7
-      },
-      "0xab1c40889175ea24b83175d9e09ee335ddf5a1ab": {
-        "amount": 2235.22,
-        "amount_prorata": 0.0201,
-        "rank": 8
-      },
-      "0xdc0604b378adca99a9e2096707ad4830673ce5b8": {
-        "amount": 1934.89,
-        "amount_prorata": 0.0174,
-        "rank": 9
-      },
-      "0xda31f8955f9583fe9286f92f7e0ea2aff46e8d3f": {
-        "amount": 1622.02,
-        "amount_prorata": 0.0146,
-        "rank": 10
-      },
-      "0xa22dc341c8dd53ab1dff6e66228e779832a449bf": {
-        "amount": 1619.18,
-        "amount_prorata": 0.0145,
-        "rank": 11
-      },
-      "0xb5f61afc77e4d3a7c89788252e8d4e25bdf0d38c": {
-        "amount": 1272.19,
-        "amount_prorata": 0.0114,
-        "rank": 12
-      },
-      "0xc55cb975d31b0960d4fb85d4fcd81c8c3eb9b32f": {
-        "amount": 1130.21,
-        "amount_prorata": 0.0102,
-        "rank": 13
-      },
-      "0x68ab2ebb00757d6e38a8414c69f768c48dcd516a": {
-        "amount": 918.18,
-        "amount_prorata": 0.0082,
-        "rank": 14
-      },
-      "0xc6a82e72156a11a2e1634633af5e4517b451f0d9": {
-        "amount": 593.25,
-        "amount_prorata": 0.0053,
-        "rank": 15
-      },
-      "0xc839cbcb7bff9c4e07e98f1c83467a67bde56ae8": {
-        "amount": 539.25,
-        "amount_prorata": 0.0048,
-        "rank": 16
-      },
-      "0xde3a652686a4d19f90731d9877d44594f83b37e7": {
-        "amount": 455.46,
-        "amount_prorata": 0.0041,
-        "rank": 17
-      },
-      "0x2afe68343f1ce5933b82d783a727c041c119614a": {
-        "amount": 454.39,
-        "amount_prorata": 0.0041,
-        "rank": 18
-      },
-      "0x11d92a54c29f2699147193f9f6f04b8e2c5dff35": {
-        "amount": 423.89,
-        "amount_prorata": 0.0038,
-        "rank": 19
-      },
-      "0xd0a0db7d1b651afd4ca11bf20f5bc5586347dc73": {
-        "amount": 420.46,
-        "amount_prorata": 0.0038,
-        "rank": 20
-      },
-      "0xa5be2b01321c89b0b729cd99eacaccb8e6a96730": {
-        "amount": 414,
-        "amount_prorata": 0.0037,
-        "rank": 21
-      },
-      "0x32c77c057732d7b1776c678002c9c4e75460eb1e": {
-        "amount": 350.65,
-        "amount_prorata": 0.0032,
-        "rank": 22
-      },
-      "0xf6c992fbd5c77838ef12a69b0c9ec07ff94bdb74": {
-        "amount": 291.27,
-        "amount_prorata": 0.0026,
-        "rank": 23
-      },
-      "0x830ed1364ab011d5aa8acd2cf816604bff3b15fc": {
-        "amount": 234.64,
-        "amount_prorata": 0.0021,
-        "rank": 24
-      },
-      "0x2653ae2b7eadd861f22d7cb8ec4891955ebf68e8": {
-        "amount": 201,
-        "amount_prorata": 0.0018,
-        "rank": 25
-      },
-      "0x083cfa7fd187be983ce5d519fe7ae78357779998": {
-        "amount": 195.65,
-        "amount_prorata": 0.0018,
-        "rank": 26
-      },
-      "0xdd3f3e36947c975ac9bd09a50eeb4530af398f11": {
-        "amount": 185,
-        "amount_prorata": 0.0017,
-        "rank": 27
-      },
-      "0x017dd2af619d2da6264710735b85e87cd78c4fe8": {
-        "amount": 169.83,
-        "amount_prorata": 0.0015,
-        "rank": 28
-      },
-      "0xfff14378ec8d8f294ddb4e2ba6674004bacb5575": {
-        "amount": 157.19,
-        "amount_prorata": 0.0014,
-        "rank": 29
-      },
-      "0x7ee567d2ac5dca4c422281deb1e2334a805ba6c1": {
-        "amount": 154.73,
-        "amount_prorata": 0.0014,
-        "rank": 30
-      },
-      "0x1cb0ed282f9fb272a785efae76474fa5f935d452": {
-        "amount": 136.72,
-        "amount_prorata": 0.0012,
-        "rank": 31
-      },
-      "0x587cb1c9a24608aeca52c243987bd8de6a81350c": {
-        "amount": 105,
-        "amount_prorata": 0.0009,
-        "rank": 32
-      },
-      "0xf10581d6ba3d531bc3ce9b24af359089fe7616f1": {
-        "amount": 103.07,
-        "amount_prorata": 0.0009,
-        "rank": 33
-      },
-      "0x8f04826edc7a6a4fc60a58b440af155b2ea40856": {
-        "amount": 100.58,
-        "amount_prorata": 0.0009,
-        "rank": 34
-      },
-      "0x46426750dc069953b3d78979fd5743c28d8f7596": {
-        "amount": 100,
-        "amount_prorata": 0.0009,
-        "rank": 35
-      },
-      "0x97e7634be705079ad6769904b1babd82960df851": {
-        "amount": 100,
-        "amount_prorata": 0.0009,
-        "rank": 36
-      },
-      "0xb2736e9cefafc7f3a504511df4140fb592623f8d": {
-        "amount": 96,
-        "amount_prorata": 0.0009,
-        "rank": 37
-      },
-      "0xa5ed8da239f400141427800da33b602a039f2254": {
-        "amount": 85.93,
-        "amount_prorata": 0.0008,
-        "rank": 38
-      },
-      "0x77162eb08a150e126c20e6e8d0601a3b451a5e7b": {
-        "amount": 75,
-        "amount_prorata": 0.0007,
-        "rank": 39
-      },
-      "0xd82f33cb12c573f4dd3c928b0aefbf4d3f8ae962": {
-        "amount": 66,
-        "amount_prorata": 0.0006,
-        "rank": 40
-      },
-      "0x875094dc0ddf541542da0c88da46f301c80e2295": {
-        "amount": 63.16,
-        "amount_prorata": 0.0006,
-        "rank": 41
-      },
-      "0xef5668da056ea0a5ef13cde9fb934d42eb006847": {
-        "amount": 60.01,
-        "amount_prorata": 0.0005,
-        "rank": 42
-      },
-      "0x935bbd6391d62cebf7901fc488336f671bfad76b": {
-        "amount": 56.22,
-        "amount_prorata": 0.0005,
-        "rank": 43
-      },
-      "0x1513cfeee6a5f0e6ea29ac33250ea6a15ba2ab0f": {
-        "amount": 50.4,
-        "amount_prorata": 0.0005,
-        "rank": 44
-      },
-      "0xfe7a5f096ca51f9dee3b19a59314420ba1b1592f": {
-        "amount": 50.4,
-        "amount_prorata": 0.0005,
-        "rank": 45
-      },
-      "0x7fbbab3a307765f42beb3d7a0b94dcbaa3240370": {
-        "amount": 42.53,
-        "amount_prorata": 0.0004,
-        "rank": 46
-      },
-      "0x8b2f32ce4694cf8bc614e8efea4b9972a79542fc": {
-        "amount": 40,
-        "amount_prorata": 0.0004,
-        "rank": 47
-      },
-      "0x8fbe912b45d3342bd40307a31544540a65e36427": {
-        "amount": 25,
-        "amount_prorata": 0.0002,
-        "rank": 48
-      },
-      "0xb0c6d7085fa8ccc6c174841495eb700130ea2e97": {
-        "amount": 24.14,
-        "amount_prorata": 0.0002,
-        "rank": 49
-      },
-      "0xaad52333ee571a5c8a3ab4aa072c2ee0ba0302b6": {
-        "amount": 20.41,
-        "amount_prorata": 0.0002,
-        "rank": 50
-      },
-      "0x01b1767ca4e97cb44845400b39043c6e352d31d9": {
-        "amount": 17.84,
-        "amount_prorata": 0.0002,
-        "rank": 51
-      },
-      "0x9566e3e6f55d4378243e55de8e037ee8e6e4de7e": {
-        "amount": 10.3,
-        "amount_prorata": 0.0001,
-        "rank": 52
-      },
-      "0x622344eec92c3de736e19ffbbe6e9cc017b2c6fe": {
-        "amount": 10,
-        "amount_prorata": 0.0001,
-        "rank": 53
-      },
-      "0x529f288298fe949c9c5c3323554c782db5021ed0": {
-        "amount": 10,
-        "amount_prorata": 0.0001,
-        "rank": 54
-      },
-      "0x0953b680f76f85a25855364cbf6ff05d4ab21e6e": {
-        "amount": 9.34,
-        "amount_prorata": 0.0001,
-        "rank": 55
-      },
-      "0xe8a7fe3b74b61642a938f217e8c117ff922d5e47": {
-        "amount": 9,
-        "amount_prorata": 0.0001,
-        "rank": 56
-      },
-      "0xc02be9069082770d5b249f98b584d22a7599e8e0": {
-        "amount": 6.76,
-        "amount_prorata": 0.0001,
-        "rank": 57
-      },
-      "0xad6d1c6bbdac1f1890cd070a5372781062e267a9": {
-        "amount": 4.98,
-        "amount_prorata": 0,
-        "rank": 58
-      },
-      "0xdb69bea5ea01990eb454c0e36ea744b993f427f1": {
-        "amount": 3.69,
-        "amount_prorata": 0,
-        "rank": 59
-      },
-      "0x032800d30d1c84c752a7b37193a375a2d9669a1a": {
-        "amount": 3.18,
-        "amount_prorata": 0,
-        "rank": 60
-      },
-      "0x83fc27bc5fa8d6465b56cc77a4e28b1b8ce60e71": {
-        "amount": 3.04,
-        "amount_prorata": 0,
-        "rank": 61
-      },
-      "0x78b78f8fe3bfce96459e48ca61b05d73fda541fb": {
-        "amount": 2.42,
-        "amount_prorata": 0,
-        "rank": 62
-      },
-      "0x26063d0a5bdba1d8d6c2380009450760519452c8": {
-        "amount": 1.68,
-        "amount_prorata": 0,
-        "rank": 63
-      },
-      "0xebd594bebf68a71bdcf37e5323c779abffc23457": {
-        "amount": 1.38,
-        "amount_prorata": 0,
-        "rank": 64
-      },
-      "0xc0663c371427bf1ee7910ff1eec2b03f76388740": {
-        "amount": 0.02,
-        "amount_prorata": 0,
-        "rank": 65
-      }
-    }
+    "2026": {}
   }
 }
