@@ -23,9 +23,18 @@ function normAddr(addr) {
   return (addr || "").toLowerCase().trim();
 }
 
+/**
+ * Parse un montant CSV : accepte séparateur de milliers US ("4,923.57")
+ * et décimal européen ("38,40"). Les virgules dans "X,XXX.XX" sont des milliers → supprimées.
+ */
 function parseAmount(str) {
   if (str == null || str === "") return 0;
-  const s = String(str).replace(/\s/g, "").replace(/,/g, ".");
+  let s = String(str).replace(/\s/g, "").replace(/^"|"$/g, "");
+  if (s.includes(".")) {
+    s = s.replace(/,/g, "");
+  } else {
+    s = s.replace(/,/g, ".");
+  }
   const n = parseFloat(s);
   return isNaN(n) ? 0 : n;
 }
@@ -33,6 +42,17 @@ function parseAmount(str) {
 function yearFromDate(dateStr) {
   const m = String(dateStr || "").match(/^(\d{4})/);
   return m ? parseInt(m[1], 10) : null;
+}
+
+/** Positions des virgules hors guillemets (pour CSV avec champs "éventuellement, avec virgule"). */
+function commaPositionsOutsideQuotes(line) {
+  const pos = [];
+  let inQuote = false;
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === '"') inQuote = !inQuote;
+    else if (!inQuote && line[i] === ",") pos.push(i);
+  }
+  return pos;
 }
 
 /** Parse "Liquidations RMM - RMM v2.csv" → [{ date, liquidator, amount }] */
@@ -48,9 +68,10 @@ function parseRmmV2() {
     if (!liquidator) continue;
     const dateMatch = line.match(/^(\d{4}-\d{2}-\d{2})/);
     const date = dateMatch ? dateMatch[1] : null;
-    const lastComma = line.lastIndexOf(",");
-    const prevComma = line.lastIndexOf(",", lastComma - 1);
-    const amountStr = line.slice(prevComma + 1, lastComma).replace(/^"|"$/g, "").replace(/,/g, ".");
+    const commas = commaPositionsOutsideQuotes(line);
+    const lastComma = commas[commas.length - 1];
+    const prevComma = commas.length >= 2 ? commas[commas.length - 2] : -1;
+    const amountStr = line.slice(prevComma + 1, lastComma).replace(/^"|"$/g, "").trim();
     const amount = parseAmount(amountStr);
     rows.push({ date, liquidator, amount });
   }
@@ -70,9 +91,10 @@ function parseRmmV3() {
     if (!liquidator) continue;
     const dateMatch = line.match(/^(\d{4}-\d{2}-\d{2})/);
     const date = dateMatch ? dateMatch[1] : null;
-    const lastComma = line.lastIndexOf(",");
-    const prevComma = line.lastIndexOf(",", lastComma - 1);
-    const amountStr = line.slice(prevComma + 1, lastComma).replace(/^"|"$/g, "").replace(/,/g, ".");
+    const commas = commaPositionsOutsideQuotes(line);
+    const lastComma = commas[commas.length - 1];
+    const prevComma = commas.length >= 2 ? commas[commas.length - 2] : -1;
+    const amountStr = line.slice(prevComma + 1, lastComma).replace(/^"|"$/g, "").trim();
     const amount = parseAmount(amountStr);
     const isWrapper = liquidator === normAddr(WRAPPER);
     rows.push({ date, liquidator, amount, isWrapper });

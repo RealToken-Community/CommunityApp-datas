@@ -24,6 +24,7 @@ import {
   GNOSIS_BLOCK_TIME,
 } from "./config.js";
 
+/** Décimales par token de dette (debtAsset). Autres tokens → défaut 18. Pas de conversion USD : on somme les montants nominaux normalisés en 8 décimales. */
 const RESERVE_DECIMALS = {
   "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83": 6,   // USDC
   "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d": 18,  // WXDAI

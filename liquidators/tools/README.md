@@ -29,11 +29,19 @@ Optional environment variables:
 
 ## Calculation
 
-- Uses pool liquidation events (e.g. `LiquidationCall` on Aave/RMM v3).
+- Uses pool liquidation events (`LiquidationCall`: **debtToCover**, **debtAsset**, liquidator).
 - For each year: sum **liquidated amount** per address (liquidator).
-- **amount**: total amount liquidated over the year (in base, e.g. USDC/XDAI).
+- **amount**: total amount liquidated over the year (normalized to 8 decimals, then displayed).
 - **amount_prorata**: liquidator's share of total liquidations for the year (0–1).
 - **rank**: ranking by liquidated amount (1 = top liquidator).
+
+### How the amount is computed (on-chain)
+
+- **Source**: `debtToCover` = debt repaid (in wei) in the **debt token** (stablecoin or other).
+- **Token**: `debtAsset` = address of the debt token (USDC, WXDAI, etc.). Only **USDC** and **WXDAI** have explicit decimals in the script; any other token (e.g. another stable or RealToken as debt) uses a default of **18 decimals**.
+- **Normalization**: `debtToBase(amountWei, debtAsset)` converts to a common 8-decimal base so we can sum across events. Display = base / 10^8. So we are **not** converting to USD: we sum nominal amounts per token (1 USDC = 1, 1 WXDAI = 1 in display; other tokens scaled by their decimals).
+- **Mock CSV**: uses the "Montant remboursé" / "Dette remboursée" column (human-readable amount in token units). Same notion as on-chain if the export is in token units.
+- **Why real and mock can differ for the same year**: (1) Snapshot: mock may have been exported at a given date, so fewer events than the full on-chain history. (2) More events on-chain for that address in that year. (3) If the CSV export used a different unit (e.g. USD for some tokens), the scale would differ.
 
 ## Data format
 
