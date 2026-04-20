@@ -1,0 +1,23 @@
+{
+  "blacklist": [
+    {
+      "pseudo": "user_malveillant123",
+      "address": "0x742d35Cc6634C0532925a3b8D7dE158f9f4B9E4d",
+      "reason": "Repeated spam and harassment"
+    },
+    {
+      "pseudo": "",
+      "address": "0x1234567890abcdef1234567890abcdef12345678",
+      "reason": "Multiple accounts and rules violation"
+    },
+    {
+      "pseudo": "scam_bot",
+      "address": "",
+      "reason": "Scam attempts and phishing"
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "last_update": "2026-02-09"
+  }
+}

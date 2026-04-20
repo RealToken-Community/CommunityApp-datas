@@ -1,0 +1,13 @@
+{
+  "name": "borrowers-rmm-fetch",
+  "version": "1.0.0",
+  "description": "Fetch RMM (v2/v3) borrow data by user and year, output realt_borrowers_gnosis JSON",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-rmm-borrowers.js",
+    "data": "node fetch-rmm-borrowers.js"
+  },
+  "dependencies": {
+    "viem": "^2.21.0"
+  }
+}

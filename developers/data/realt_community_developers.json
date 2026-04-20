@@ -1,0 +1,268 @@
+{
+  "execution_script": "2026-02-16T01:10:22.464Z",
+  "RealToken-Community": {
+    "2019": {},
+    "2020": {
+      "Sigri44": {
+        "commits": 134,
+        "rank": 1
+      }
+    },
+    "2021": {
+      "Sigri44": {
+        "commits": 234,
+        "rank": 1
+      },
+      "wysow": {
+        "commits": 6,
+        "rank": 2
+      }
+    },
+    "2022": {
+      "Sigri44": {
+        "commits": 86,
+        "rank": 1
+      },
+      "LucaSilverhand": {
+        "commits": 5,
+        "rank": 2
+      },
+      "dependabot[bot]": {
+        "commits": 2,
+        "rank": 3
+      },
+      "Kurtisone": {
+        "commits": 2,
+        "rank": 4
+      }
+    },
+    "2023": {
+      "Kurtisone": {
+        "commits": 118,
+        "rank": 1
+      },
+      "jycssu-com": {
+        "commits": 98,
+        "rank": 2
+      },
+      "Sigri44": {
+        "commits": 60,
+        "rank": 3
+      },
+      "WikiRealTProd": {
+        "commits": 40,
+        "rank": 4
+      },
+      "NandyBa": {
+        "commits": 15,
+        "rank": 5
+      },
+      "ehpst": {
+        "commits": 2,
+        "rank": 6
+      },
+      "Phil3P": {
+        "commits": 2,
+        "rank": 7
+      },
+      "brigand.vincent@gmail.com": {
+        "commits": 1,
+        "rank": 8
+      },
+      "anthony-robin": {
+        "commits": 1,
+        "rank": 9
+      },
+      "gitbook-bot": {
+        "commits": 1,
+        "rank": 10
+      }
+    },
+    "2024": {
+      "Sigri44": {
+        "commits": 159,
+        "rank": 1
+      },
+      "WikiRealTProd": {
+        "commits": 153,
+        "rank": 2
+      },
+      "Phil3P": {
+        "commits": 123,
+        "rank": 3
+      },
+      "jycssu-com": {
+        "commits": 117,
+        "rank": 4
+      },
+      "Michael-RealT": {
+        "commits": 116,
+        "rank": 5
+      },
+      "AlexRLT": {
+        "commits": 97,
+        "rank": 6
+      },
+      "dev@realt.community": {
+        "commits": 83,
+        "rank": 7
+      },
+      "NandyBa": {
+        "commits": 75,
+        "rank": 8
+      },
+      "mfrederic": {
+        "commits": 49,
+        "rank": 9
+      },
+      "baptistr": {
+        "commits": 27,
+        "rank": 10
+      },
+      "pp@yopmail.com": {
+        "commits": 5,
+        "rank": 11
+      },
+      "Yohann76": {
+        "commits": 4,
+        "rank": 12
+      },
+      "chuc@realt.co": {
+        "commits": 4,
+        "rank": 13
+      },
+      "mathfred": {
+        "commits": 3,
+        "rank": 14
+      },
+      "Kurtisone": {
+        "commits": 2,
+        "rank": 15
+      },
+      "jojodunet": {
+        "commits": 2,
+        "rank": 16
+      },
+      "dependabot[bot]": {
+        "commits": 2,
+        "rank": 17
+      },
+      "rpc3000": {
+        "commits": 2,
+        "rank": 18
+      },
+      "quangchuc": {
+        "commits": 2,
+        "rank": 19
+      },
+      "s-leroux": {
+        "commits": 1,
+        "rank": 20
+      },
+      "ALEPAN@viveseaux.local": {
+        "commits": 1,
+        "rank": 21
+      },
+      "byackee": {
+        "commits": 1,
+        "rank": 22
+      }
+    },
+    "2025": {
+      "WikiRealTProd": {
+        "commits": 103,
+        "rank": 1
+      },
+      "baptiste@mac.home": {
+        "commits": 102,
+        "rank": 2
+      },
+      "byackee": {
+        "commits": 63,
+        "rank": 3
+      },
+      "Sigri44": {
+        "commits": 60,
+        "rank": 4
+      },
+      "Yohann76": {
+        "commits": 51,
+        "rank": 5
+      },
+      "logan.sulpizio@widetech.com": {
+        "commits": 40,
+        "rank": 6
+      },
+      "Michael-RealT": {
+        "commits": 24,
+        "rank": 7
+      },
+      "santarellib@gmail.com": {
+        "commits": 11,
+        "rank": 8
+      },
+      "baptiste@MacBook-Air-de-Baptiste.local": {
+        "commits": 6,
+        "rank": 9
+      },
+      "Darkildo": {
+        "commits": 3,
+        "rank": 10
+      },
+      "Baptiste-Yucca": {
+        "commits": 2,
+        "rank": 11
+      },
+      "NandyBa": {
+        "commits": 1,
+        "rank": 12
+      },
+      "rpc3000": {
+        "commits": 1,
+        "rank": 13
+      },
+      "baptistr": {
+        "commits": 1,
+        "rank": 14
+      },
+      "cloudflare[bot]": {
+        "commits": 1,
+        "rank": 15
+      }
+    },
+    "2026": {
+      "Yohann76": {
+        "commits": 127,
+        "rank": 1
+      },
+      "Sigri44": {
+        "commits": 22,
+        "rank": 2
+      },
+      "Baptiste-Yucca": {
+        "commits": 14,
+        "rank": 3
+      },
+      "WikiRealTProd": {
+        "commits": 9,
+        "rank": 4
+      },
+      "santarellib@gmail.com": {
+        "commits": 8,
+        "rank": 5
+      },
+      "baptiste@mac.home": {
+        "commits": 7,
+        "rank": 6
+      },
+      "logan.sulpizio@widetech.com": {
+        "commits": 6,
+        "rank": 7
+      },
+      "dependabot[bot]": {
+        "commits": 5,
+        "rank": 8
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "borrowers",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "fetch": "cd tools && npm install && npm run fetch",
+    "data": "cd tools && npm run fetch"
+  }
+}

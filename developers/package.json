@@ -1,0 +1,9 @@
+{
+  "name": "developers",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "fetch": "cd tools && npm run fetch",
+    "data": "cd tools && npm run fetch"
+  }
+}

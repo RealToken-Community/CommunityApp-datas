@@ -1,0 +1,14 @@
+{
+  "name": "liquidators-rmm-fetch",
+  "version": "1.0.0",
+  "description": "Fetch RMM (v2/v3) liquidation data by liquidator address and year, output realt_liquidators_gnosis JSON",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-rmm-liquidators.js",
+    "data": "node fetch-rmm-liquidators.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "viem": "^2.21.0"
+  }
+}

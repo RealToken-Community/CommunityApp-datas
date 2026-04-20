@@ -1,0 +1,21 @@
+{
+  "execution_script": "2025-02-15T12:00:00.000Z",
+  "RealToken-Community": {
+    "2023": {
+      "byackee": {"commits": 45, "rank": 1},
+      "Sigri44": {"commits": 28, "rank": 2},
+      "Yohann76": {"commits": 15, "rank": 3}
+    },
+    "2024": {
+      "byackee": {"commits": 65, "rank": 1},
+      "Sigri44": {"commits": 42, "rank": 2},
+      "Yohann76": {"commits": 22, "rank": 3},
+      "autre-dev": {"commits": 18, "rank": 4}
+    },
+    "2025": {
+      "byackee": {"commits": 40, "rank": 1},
+      "Sigri44": {"commits": 19, "rank": 2},
+      "Yohann76": {"commits": 8, "rank": 3}
+    }
+  }
+}
